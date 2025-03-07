@@ -54,7 +54,7 @@ const Login = () => {
                             value={formData.password}
                             onChange={handleChange}
                         />
-                    <a className={styles['esqueceu-senha']} href=''>Esqueceu sua senha?</a>
+                    <a className={styles['esqueceu-senha']}>Esqueceu sua senha?</a>
                     <button type="submit" className={styles['login-button']}>Entrar</button>
                 </form>
             </div>
