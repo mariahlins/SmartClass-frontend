@@ -45,7 +45,6 @@ const Login = () => {
         } catch (error) {
             console.error('Erro ao enviar dados:', error);
         }
-        console.log(formData);
     };
 
   return (
