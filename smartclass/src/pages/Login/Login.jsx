@@ -1,6 +1,6 @@
 import styles from './Login.module.css';
 import { useState } from 'react';
-import LoginController from '../../../controllers/loginController';
+import AuthController from '../../../controllers/authController';
 
 const Login = () => {
     const [formData, setFormData] = useState({
@@ -37,7 +37,7 @@ const Login = () => {
                 cpf: formData.cpf.replace(/\D/g, ''),
             };
 
-            const response = await LoginController.login(dataToSend);
+            const response = await AuthController.login(dataToSend);
 
             localStorage.setItem('accessToken', response.access);
             localStorage.setItem('refreshToken', response.refresh);
