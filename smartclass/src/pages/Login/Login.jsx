@@ -1,33 +1,52 @@
-import styles from './Login.module.css'
-import { useState } from 'react'
-import axios from 'axios';
+import styles from './Login.module.css';
+import { useState } from 'react';
+import LoginController from '../../../controllers/loginController';
 
 const Login = () => {
     const [formData, setFormData] = useState({
-        cpf:'',
-        password:'',
-    })
+        cpf: '',
+        password: '',
+    });
+
+    const formatCPF = (value) => {
+        const cleanedValue = value.replace(/\D/g, '');
+
+        let formattedValue = cleanedValue.replace(/(\d{3})(\d)/, '$1.$2');
+        formattedValue = formattedValue.replace(/(\d{3})(\d)/, '$1.$2'); 
+        formattedValue = formattedValue.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+
+        return formattedValue;
+    };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
-      };
 
-    const handleSubmit = async (e) =>{
+        if (name === 'cpf') {
+            const formattedValue = formatCPF(value);
+            setFormData({ ...formData, [name]: formattedValue });
+        } else {
+            setFormData({ ...formData, [name]: value });
+        }
+    };
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-          console.log("Enviando dados:", formData);
-          const response = await axios.post('http://127.0.0.1:8000/api/auth/login/', formData, {
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          });
-          console.log('Resposta do servidor:', response.data);
+            const dataToSend = {
+                ...formData,
+                cpf: formData.cpf.replace(/\D/g, ''),
+            };
+
+            const response = await LoginController.login(dataToSend);
+
+            localStorage.setItem('accessToken', response.access);
+            localStorage.setItem('refreshToken', response.refresh);
+
         } catch (error) {
-          console.error('Erro ao enviar dados:', error.response ? error.response.data : error.message);
+            console.error('Erro ao enviar dados:', error);
         }
-        console.log(formData)
-    }
+        console.log(formData);
+    };
 
   return (
     <div className={styles["lgn-container"]}>
@@ -44,8 +63,9 @@ const Login = () => {
                             placeholder="111.111.111-11"
                             value={formData.cpf}
                             onChange={handleChange}
+                            maxLength={14}
                         />
-                    <label className={styles['lgn-label']}>Password</label>
+                    <label className={styles['lgn-label']}>Senha</label>
                         <input
                             className={styles['lgn-input']}
                             type="password"
