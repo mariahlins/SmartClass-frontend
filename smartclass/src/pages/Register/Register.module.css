@@ -9,7 +9,7 @@ html, body {
     overflow: hidden;
 }
 
-.lgn-container {
+.rgstr-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -20,12 +20,12 @@ html, body {
     margin: 0; 
 }
 
-.lgn-content {
+.rgstr-content {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 400px; 
-    padding: 2rem;
+    padding: 1rem;
     border-radius: 1.6rem;
     background: rgba(255, 255, 255, 0.1); 
     backdrop-filter: blur(10px); 
@@ -35,36 +35,29 @@ html, body {
     text-align: center;
 }
 
-.lgn-content h1 {
+.rgstr-content h1 {
     font-size: 2.5rem;
     margin: 0;
     color: #fff;
     font-weight: 600;
 }
 
-.lgn-content h4 {
+.rgstr-content h4 {
     font-size: 1.2rem;
     margin: 1rem 0 2rem 0;
     color: #e0e0e0;
     font-weight: 400;
 }
 
-.login-form {
+.rgstr-form {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
 }
 
-.lgn-label{
-    color: rgb(255, 255, 255);
-    font-size: 1rem;
-    text-decoration: none;
-    margin: 0.5rem 0;
-    transition: color 0.3s ease;
-}
-
-.login-form input {
+.rgstr-form input,
+.rgstr-form select {
     width: 100%;
     height: 3rem;
     background-color: rgba(255, 255, 255, 0.1);
@@ -77,18 +70,20 @@ html, body {
     transition: all 0.3s ease; 
 }
 
-.login-form input::placeholder {
+.rgstr-form input::placeholder,
+.rgstr-form select::placeholder {
     color: rgba(255, 255, 255, 0.7);
 }
 
-.login-form input:focus {
+.rgstr-form input:focus,
+.rgstr-form select:focus {
     outline: none;
     border-color: #6b3cf4;
     background-color: rgba(255, 255, 255, 0.2); 
     box-shadow: 0 0 8px rgba(107, 60, 244, 0.5); 
 }
 
-.login-form button {
+.rgstr-form button {
     width: 100%;
     height: 3rem;
     background: linear-gradient(45deg, #6b3cf4, #361d7d); 
@@ -102,27 +97,78 @@ html, body {
     transition: all 0.3s ease; 
 }
 
-.login-form button:hover {
+.rgstr-form button:hover {
     box-shadow: 0 4px 12px rgba(107, 60, 244, 0.4); 
 }
 
-.esqueceu-senha {
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 0.9rem;
+.rgstr-label {
+    color: rgb(255, 255, 255);
+    font-size: 1rem;
     text-decoration: none;
     margin: 0.5rem 0;
     transition: color 0.3s ease; 
 }
 
-.register-link {
-    margin-top: 1rem;
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 0.9rem;
-    text-align: center;
+.rgstr-select {
+    width: 100%;
+    margin: 0.5rem 0;
 }
 
-.register-link span {
-    cursor: pointer;
-    text-decoration: underline;
-    transition: color 0.3s ease;
+.rgstr-select .css-1s2u09g-control {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 0.5rem;
+    color: #fafafa;
+    box-shadow: none;
+}
+
+.rgstr-select .css-1s2u09g-control:hover {
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.rgstr-select .css-1pahdxg-control {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 0.5rem;
+    color: #fafafa;
+    box-shadow: none;
+}
+
+.rgstr-select .css-1pahdxg-control:hover {
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.rgstr-select .css-26l3qy-menu {
+    background-color: #6a11cb;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 0.5rem;
+}
+
+.rgstr-select .css-1n7v3ny-option {
+    background-color: #8a63f2;
+    color: #fafafa;
+}
+
+.rgstr-select .css-1n7v3ny-option:active {
+    background-color: #8a63f2;
+}
+
+.rgstr-select .css-1uccc91-singleValue {
+    color: #fafafa;
+}
+
+.rgstr-select .css-1wa3eu0-placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.rgstr-select .css-1okebmr-indicatorSeparator {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.rgstr-select .css-tlfecz-indicatorContainer {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.rgstr-select .css-tlfecz-indicatorContainer:hover {
+    color: #fafafa;
 }

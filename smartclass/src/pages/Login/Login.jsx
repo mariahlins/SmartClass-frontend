@@ -1,6 +1,7 @@
 import styles from './Login.module.css';
 import { useState } from 'react';
-import AuthController from '../../../controllers/authController';
+import { useNavigate } from 'react-router-dom';
+import AuthController from '../../../controllers/AuthController';
 
 const Login = () => {
     const [formData, setFormData] = useState({
@@ -8,6 +9,8 @@ const Login = () => {
         password: '',
     });
 
+    const navigate = useNavigate();
+    
     const formatCPF = (value) => {
         const cleanedValue = value.replace(/\D/g, '');
 
@@ -42,6 +45,10 @@ const Login = () => {
             localStorage.setItem('accessToken', response.access);
             localStorage.setItem('refreshToken', response.refresh);
 
+            if (localStorage.getItem('accessToken') && localStorage.getItem('refreshToken')) {
+                alert('Login efetuado com sucesso!');
+            }
+
         } catch (error) {
             console.error('Erro ao enviar dados:', error);
         }
@@ -54,7 +61,7 @@ const Login = () => {
             <h4>Conecte-se ao aprendizado!</h4>
             <div className={styles["input-group-login"]}>
                 <form onSubmit={handleSubmit} className={styles['login-form']}>
-                    <label className={styles['lgn-label']}>CPF:</label>
+                    <label className={styles['lgn-label']}>CPF</label>
                         <input
                             className={styles['lgn-input']}
                             type="text"
@@ -73,7 +80,10 @@ const Login = () => {
                             value={formData.password}
                             onChange={handleChange}
                         />
-                    <a className={styles['esqueceu-senha']}>Esqueceu sua senha?</a>
+                    <p className={styles['register-link']}>
+                            Não tem uma conta?{' '}
+                            <span onClick={() => navigate('/register')}>Cadastre-se</span>
+                    </p>
                     <button type="submit" className={styles['login-button']}>Entrar</button>
                 </form>
             </div>
