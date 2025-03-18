@@ -66,14 +66,15 @@ const Register = () => {
                 alert('Por favor, selecione um curso.');
                 return;
             }
-
+    
             const dataToSend = {
                 ...formData,
                 cpf: formData.cpf.replace(/\D/g, ''), 
             };
-
+    
             const response = await AuthController.register(dataToSend);
-
+            console.log('response status code:', response.status);
+            console.log('response:', response);
             setFormData({
                 name: '',
                 cpf: '',
@@ -81,16 +82,25 @@ const Register = () => {
                 password: '',
                 curso: '',
             });
-
+    
             alert('Cadastro realizado com sucesso!');
             navigate('/');
-
         } catch (error) {
-            console.error('Erro ao enviar dados de cadastro:', error);
-            alert('Erro ao realizar cadastro. Tente novamente.');
+            if (error.response && error.response.status === 409) {
+                if (error.response.data.error === 'CPF already exists') {
+                    console.log('error.response.data:', error.response.data);
+                    alert('CPF já cadastrado');
+                } else if (error.response.data.error === 'Email already exists') {
+                    alert('Email já cadastrado');
+                } else {
+                    alert('Erro ao realizar cadastro');
+                }
+            } else {
+                alert('Erro ao realizar cadastro');
+            }
+            console.error('Erro ao realizar cadastro:', error);
         }
     };
-
     return (
         <div className={styles['rgstr-container']}>
             <div className={styles['rgstr-content']}>
