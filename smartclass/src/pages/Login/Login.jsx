@@ -57,8 +57,11 @@ const Login = () => {
   return (
     <div className={styles["lgn-container"]}>
         <div className={styles['lgn-content']}>
+        <div className={styles['lgn-content2']}>
             <h1>SmartClass</h1>
             <h4>Conecte-se ao aprendizado!</h4>
+        </div>
+        <div className={styles['lgn-content2']}>
             <div className={styles["input-group-login"]}>
                 <form onSubmit={handleSubmit} className={styles['login-form']}>
                     <label className={styles['lgn-label']}>CPF</label>
@@ -86,6 +89,7 @@ const Login = () => {
                     </p>
                     <button type="submit" className={styles['login-button']}>Entrar</button>
                 </form>
+            </div>
             </div>
         </div>
     </div>
