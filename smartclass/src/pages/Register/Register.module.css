@@ -1,0 +1,174 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    overflow: hidden;
+}
+
+.rgstr-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #6a11cb, #2575fc); 
+    font-family: "Poppins", sans-serif;
+    padding: 0; 
+    margin: 0; 
+}
+
+.rgstr-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 400px; 
+    padding: 1rem;
+    border-radius: 1.6rem;
+    background: rgba(255, 255, 255, 0.1); 
+    backdrop-filter: blur(10px); 
+    border: 1px solid rgba(255, 255, 255, 0.2); 
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    color: #fafafa;
+    text-align: center;
+}
+
+.rgstr-content h1 {
+    font-size: 2.5rem;
+    margin: 0;
+    color: #fff;
+    font-weight: 600;
+}
+
+.rgstr-content h4 {
+    font-size: 1.2rem;
+    margin: 1rem 0 2rem 0;
+    color: #e0e0e0;
+    font-weight: 400;
+}
+
+.rgstr-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.rgstr-form input,
+.rgstr-form select {
+    width: 100%;
+    height: 3rem;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fafafa;
+    border-radius: 0.5rem;
+    padding: 0 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.3); 
+    font-size: 1rem;
+    margin: 0.5rem 0;
+    transition: all 0.3s ease; 
+}
+
+.rgstr-form input::placeholder,
+.rgstr-form select::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.rgstr-form input:focus,
+.rgstr-form select:focus {
+    outline: none;
+    border-color: #6b3cf4;
+    background-color: rgba(255, 255, 255, 0.2); 
+    box-shadow: 0 0 8px rgba(107, 60, 244, 0.5); 
+}
+
+.rgstr-form button {
+    width: 100%;
+    height: 3rem;
+    background: linear-gradient(45deg, #6b3cf4, #361d7d); 
+    color: #fafafa;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    margin: 1rem 0;
+    cursor: pointer;
+    transition: all 0.3s ease; 
+}
+
+.rgstr-form button:hover {
+    box-shadow: 0 4px 12px rgba(107, 60, 244, 0.4); 
+}
+
+.rgstr-label {
+    color: rgb(255, 255, 255);
+    font-size: 1rem;
+    text-decoration: none;
+    margin: 0.5rem 0;
+    transition: color 0.3s ease; 
+}
+
+.rgstr-select {
+    width: 100%;
+    margin: 0.5rem 0;
+}
+
+.rgstr-select .css-1s2u09g-control {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 0.5rem;
+    color: #fafafa;
+    box-shadow: none;
+}
+
+.rgstr-select .css-1s2u09g-control:hover {
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.rgstr-select .css-1pahdxg-control {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 0.5rem;
+    color: #fafafa;
+    box-shadow: none;
+}
+
+.rgstr-select .css-1pahdxg-control:hover {
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.rgstr-select .css-26l3qy-menu {
+    background-color: #6a11cb;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 0.5rem;
+}
+
+.rgstr-select .css-1n7v3ny-option {
+    background-color: #8a63f2;
+    color: #fafafa;
+}
+
+.rgstr-select .css-1n7v3ny-option:active {
+    background-color: #8a63f2;
+}
+
+.rgstr-select .css-1uccc91-singleValue {
+    color: #fafafa;
+}
+
+.rgstr-select .css-1wa3eu0-placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.rgstr-select .css-1okebmr-indicatorSeparator {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.rgstr-select .css-tlfecz-indicatorContainer {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.rgstr-select .css-tlfecz-indicatorContainer:hover {
+    color: #fafafa;
+}
