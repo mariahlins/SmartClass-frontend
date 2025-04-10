@@ -127,7 +127,7 @@ const Register = () => {
                             onChange={handleChange}
                             maxLength={14}
                             required 
-                        />
+                        />     
                         <label className={styles['rgstr-label']}>Email</label>
                         <input
                             type="email"
@@ -138,17 +138,7 @@ const Register = () => {
                             onChange={handleChange}
                             required 
                         />
-                        <label className={styles['rgstr-label']}>Senha</label>
-                        <input
-                            type="password"
-                            name="password"
-                            className={styles['rgstr-input']}
-                            placeholder="Senha"
-                            value={formData.password}
-                            onChange={handleChange}
-                            required 
-                        />
-                        <label className={styles['rgstr-label']}>Curso</label>
+                                                <label className={styles['rgstr-label']}>Curso</label>
                         <Select
                             options={cursos}
                             onChange={handleCursoChange}
@@ -200,6 +190,16 @@ const Register = () => {
                                     backgroundColor: 'rgba(255, 255, 255, 0.3)',
                                 }),
                             }}
+                            required 
+                        />
+                        <label className={styles['rgstr-label']}>Senha</label>
+                        <input
+                            type="password"
+                            name="password"
+                            className={styles['rgstr-input']}
+                            placeholder="Senha"
+                            value={formData.password}
+                            onChange={handleChange}
                             required 
                         />
                         <button type="submit" className={styles['rgstr-btn']}>Registrar</button>

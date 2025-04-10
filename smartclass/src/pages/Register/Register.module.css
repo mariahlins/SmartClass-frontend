@@ -1,9 +1,3 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 html, body {
     height: 100%;
     overflow: hidden;
@@ -14,7 +8,7 @@ html, body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: linear-gradient(135deg, #6a11cb, #2575fc); 
+    background: url('images/background-2.png'); 
     font-family: "Poppins", sans-serif;
     padding: 0; 
     margin: 0; 
@@ -36,7 +30,7 @@ html, body {
 }
 
 .rgstr-content h1 {
-    font-size: 2.5rem;
+    font-size: 2rem;
     margin: 0;
     color: #fff;
     font-weight: 600;
@@ -59,7 +53,7 @@ html, body {
 .rgstr-form input,
 .rgstr-form select {
     width: 100%;
-    height: 3rem;
+    height: 2.4rem;
     background-color: rgba(255, 255, 255, 0.1);
     color: #fafafa;
     border-radius: 0.5rem;
@@ -80,16 +74,16 @@ html, body {
     outline: none;
     border-color: #6b3cf4;
     background-color: rgba(255, 255, 255, 0.2); 
-    box-shadow: 0 0 8px rgba(107, 60, 244, 0.5); 
+    box-shadow: 0 0 4px rgba(31, 9, 94, 0.2); 
 }
 
 .rgstr-form button {
     width: 100%;
     height: 3rem;
-    background: linear-gradient(45deg, #6b3cf4, #361d7d); 
+    background: #6a11cb; 
     color: #fafafa;
     border: none;
-    border-radius: 0.5rem;
+    border-radius: .8rem;
     font-size: 1rem;
     font-weight: 500;
     margin: 1rem 0;
@@ -98,14 +92,13 @@ html, body {
 }
 
 .rgstr-form button:hover {
-    box-shadow: 0 4px 12px rgba(107, 60, 244, 0.4); 
+    background-color: #6d42e2;
 }
 
 .rgstr-label {
     color: rgb(255, 255, 255);
     font-size: 1rem;
     text-decoration: none;
-    margin: 0.5rem 0;
     transition: color 0.3s ease; 
 }
 
