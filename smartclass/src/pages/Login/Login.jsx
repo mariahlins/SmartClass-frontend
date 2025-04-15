@@ -2,6 +2,7 @@ import styles from './Login.module.css';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthController from '../../../controllers/AuthController';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 const Login = () => {
     const [formData, setFormData] = useState({
@@ -9,6 +10,7 @@ const Login = () => {
         password: '',
     });
 
+    const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
     
     const formatCPF = (value) => {
@@ -30,6 +32,10 @@ const Login = () => {
         } else {
             setFormData({ ...formData, [name]: value });
         }
+    };
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
     };
 
     const handleSubmit = async (e) => {
@@ -75,14 +81,22 @@ const Login = () => {
                             maxLength={14}
                         />
                     <label className={styles['lgn-label']}>Senha</label>
+                    <div className={styles['password-input-wrapper']}>
                         <input
                             className={styles['lgn-input']}
-                            type="password"
+                            type={showPassword ? "text" : "password"}
                             name="password"
                             placeholder="Senha"
                             value={formData.password}
                             onChange={handleChange}
                         />
+                        <span 
+                            className={styles['password-toggle-icon']}
+                            onClick={togglePasswordVisibility}
+                        >
+                            {showPassword ? <FaEyeSlash /> : <FaEye />}
+                        </span>
+                    </div>
                     <p className={styles['register-link']}>
                             Não tem uma conta?{' '}
                             <span onClick={() => navigate('/register')}>Cadastre-se</span>

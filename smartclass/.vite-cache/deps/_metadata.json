@@ -1,55 +1,61 @@
 {
-  "hash": "3e04465c",
-  "configHash": "a24ddab8",
+  "hash": "b97a4480",
+  "configHash": "00dcc4e5",
   "lockfileHash": "57719073",
-  "browserHash": "fad66e50",
+  "browserHash": "465a2df0",
   "optimized": {
     "react": {
       "src": "../../node_modules/react/index.js",
       "file": "react.js",
-      "fileHash": "5f64d677",
+      "fileHash": "083b07d4",
       "needsInterop": true
     },
     "react-dom": {
       "src": "../../node_modules/react-dom/index.js",
       "file": "react-dom.js",
-      "fileHash": "5268ce06",
+      "fileHash": "660e2055",
       "needsInterop": true
     },
     "react/jsx-dev-runtime": {
       "src": "../../node_modules/react/jsx-dev-runtime.js",
       "file": "react_jsx-dev-runtime.js",
-      "fileHash": "a3b79fda",
+      "fileHash": "1bb48240",
       "needsInterop": true
     },
     "react/jsx-runtime": {
       "src": "../../node_modules/react/jsx-runtime.js",
       "file": "react_jsx-runtime.js",
-      "fileHash": "aedab097",
+      "fileHash": "39241bfb",
       "needsInterop": true
     },
     "axios": {
       "src": "../../node_modules/axios/index.js",
       "file": "axios.js",
-      "fileHash": "3e052d6f",
+      "fileHash": "ad4c7845",
       "needsInterop": false
     },
     "react-dom/client": {
       "src": "../../node_modules/react-dom/client.js",
       "file": "react-dom_client.js",
-      "fileHash": "0db65c8d",
+      "fileHash": "30684442",
       "needsInterop": true
     },
     "react-router-dom": {
       "src": "../../node_modules/react-router-dom/dist/index.mjs",
       "file": "react-router-dom.js",
-      "fileHash": "3df3a1fd",
+      "fileHash": "3925a7f0",
       "needsInterop": false
     },
     "react-select": {
       "src": "../../node_modules/react-select/dist/react-select.esm.js",
       "file": "react-select.js",
-      "fileHash": "0cb78ba0",
+      "fileHash": "8ca6a4aa",
+      "needsInterop": false
+    },
+    "react-icons/fa": {
+      "src": "../../../node_modules/react-icons/fa/index.mjs",
+      "file": "react-icons_fa.js",
+      "fileHash": "02ea867b",
       "needsInterop": false
     }
   },
