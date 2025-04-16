@@ -1,65 +1,80 @@
 {
-  "hash": "b97a4480",
-  "configHash": "00dcc4e5",
-  "lockfileHash": "57719073",
-  "browserHash": "465a2df0",
+  "hash": "b8cd4650",
+  "configHash": "a24ddab8",
+  "lockfileHash": "5e8707f6",
+  "browserHash": "58a1bdc4",
   "optimized": {
     "react": {
       "src": "../../node_modules/react/index.js",
       "file": "react.js",
-      "fileHash": "083b07d4",
+      "fileHash": "668f84cf",
       "needsInterop": true
     },
     "react-dom": {
       "src": "../../node_modules/react-dom/index.js",
       "file": "react-dom.js",
-      "fileHash": "660e2055",
+      "fileHash": "ea2baa9f",
       "needsInterop": true
     },
     "react/jsx-dev-runtime": {
       "src": "../../node_modules/react/jsx-dev-runtime.js",
       "file": "react_jsx-dev-runtime.js",
-      "fileHash": "1bb48240",
+      "fileHash": "951a0e33",
       "needsInterop": true
     },
     "react/jsx-runtime": {
       "src": "../../node_modules/react/jsx-runtime.js",
       "file": "react_jsx-runtime.js",
-      "fileHash": "39241bfb",
+      "fileHash": "ef9de4a7",
       "needsInterop": true
+    },
+    "@fortawesome/free-solid-svg-icons": {
+      "src": "../../node_modules/@fortawesome/free-solid-svg-icons/index.mjs",
+      "file": "@fortawesome_free-solid-svg-icons.js",
+      "fileHash": "2849eb97",
+      "needsInterop": false
+    },
+    "@fortawesome/react-fontawesome": {
+      "src": "../../node_modules/@fortawesome/react-fontawesome/index.es.js",
+      "file": "@fortawesome_react-fontawesome.js",
+      "fileHash": "36b3537b",
+      "needsInterop": false
     },
     "axios": {
       "src": "../../node_modules/axios/index.js",
       "file": "axios.js",
-      "fileHash": "ad4c7845",
+      "fileHash": "32a5d053",
       "needsInterop": false
     },
     "react-dom/client": {
       "src": "../../node_modules/react-dom/client.js",
       "file": "react-dom_client.js",
-      "fileHash": "30684442",
+      "fileHash": "6c03a2fa",
       "needsInterop": true
+    },
+    "react-icons/fa": {
+      "src": "../../node_modules/react-icons/fa/index.mjs",
+      "file": "react-icons_fa.js",
+      "fileHash": "4bb77c74",
+      "needsInterop": false
     },
     "react-router-dom": {
       "src": "../../node_modules/react-router-dom/dist/index.mjs",
       "file": "react-router-dom.js",
-      "fileHash": "3925a7f0",
+      "fileHash": "570daf4b",
       "needsInterop": false
     },
     "react-select": {
       "src": "../../node_modules/react-select/dist/react-select.esm.js",
       "file": "react-select.js",
-      "fileHash": "8ca6a4aa",
-      "needsInterop": false
-    },
-    "react-icons/fa": {
-      "src": "../../../node_modules/react-icons/fa/index.mjs",
-      "file": "react-icons_fa.js",
-      "fileHash": "02ea867b",
+      "fileHash": "be082002",
       "needsInterop": false
     }
   },
   "chunks": {
+    "chunk-Q6DFBYTI": {
+      "file": "chunk-Q6DFBYTI.js"
+    },
     "chunk-MX6SYE36": {
       "file": "chunk-MX6SYE36.js"
     },

@@ -167,3 +167,25 @@ html, body {
     text-decoration: underline;
     transition: color 0.3s ease;
 }
+
+@media (max-width: 768px) {
+    .lgn-content{
+        flex-direction: column;
+        width: 90vw;
+        height: 80vh;
+        padding: 0;
+    }
+
+    .lgn-content2{
+        width: 100%;
+    }
+
+    .lgn-content h4{
+        font-size: 1rem;
+        margin:0;
+    }
+
+    .login-form{
+        width: 70vw;
+    }
+}

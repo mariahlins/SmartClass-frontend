@@ -11,6 +11,18 @@ class AuthController {
         }
     }
 
+    static async verifyRole(requiredRole) {
+        try {
+            const response = await api.post('auth/verify-role/', { 
+                role: requiredRole 
+            });
+            return response.data;
+        } catch (error) {
+            console.error('Erro ao verificar o papel do usuário:', error.response ? error.response.data : error.message);
+            throw error;
+        }
+    }
+
     static async register(formData){
         try{
             const response = await api.post('auth/register/', formData);

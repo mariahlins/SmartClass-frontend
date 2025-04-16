@@ -1,10 +1,9 @@
 import styles from './Register.module.css';
 import { useState, useEffect } from 'react';
 import AuthController from '../../../controllers/AuthController';
-import CursoController from '../../../controllers/CursoController';
+import CursoController from '../../../controllers/lms/CursoController';
 import { useNavigate } from 'react-router-dom';
 import Select from 'react-select';
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 const Register = () => {
     const [formData, setFormData] = useState({
@@ -12,14 +11,10 @@ const Register = () => {
         cpf: '',
         email: '',
         password: '',
-        confirmPassword: '',
         curso: '',
     });
 
     const [cursos, setCursos] = useState([]);
-    const [showPassword, setShowPassword] = useState(false);
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-    const [passwordMatch, setPasswordMatch] = useState(true);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -39,10 +34,6 @@ const Register = () => {
         fetchCursos();
     }, []);
 
-    useEffect(() => {
-        setPasswordMatch(formData.password === formData.confirmPassword);
-    }, [formData.password, formData.confirmPassword]);
-
     const formatCPF = (value) => {
         const cleanedValue = value.replace(/\D/g, '');
 
@@ -55,7 +46,7 @@ const Register = () => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        
+
         if (name === 'cpf') {
             const formattedValue = formatCPF(value);
             setFormData({ ...formData, [name]: formattedValue });
@@ -68,50 +59,36 @@ const Register = () => {
         setFormData({ ...formData, curso: selectedOption.value });
     };
 
-    const togglePasswordVisibility = () => {
-        setShowPassword(!showPassword);
-    };
-
-    const toggleConfirmPasswordVisibility = () => {
-        setShowConfirmPassword(!showConfirmPassword);
-    };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
-        if (!formData.curso) {
-            alert('Por favor, selecione um curso.');
-            return;
-        }
-        
-        if (!passwordMatch) {
-            alert('As senhas não coincidem!');
-            return;
-        }
-
         try {
+            if (!formData.curso) {
+                alert('Por favor, selecione um curso.');
+                return;
+            }
+    
             const dataToSend = {
                 ...formData,
-                cpf: formData.cpf.replace(/\D/g, ''),
-                confirmPassword: undefined
+                cpf: formData.cpf.replace(/\D/g, ''), 
             };
     
             const response = await AuthController.register(dataToSend);
-            
+            console.log('response status code:', response.status);
+            console.log('response:', response);
             setFormData({
                 name: '',
                 cpf: '',
                 email: '',
                 password: '',
-                confirmPassword: '',
                 curso: '',
             });
-            
+    
             alert('Cadastro realizado com sucesso!');
             navigate('/');
         } catch (error) {
             if (error.response && error.response.status === 409) {
                 if (error.response.data.error === 'CPF already exists') {
+                    console.log('error.response.data:', error.response.data);
                     alert('CPF já cadastrado');
                 } else if (error.response.data.error === 'Email already exists') {
                     alert('Email já cadastrado');
@@ -121,9 +98,9 @@ const Register = () => {
             } else {
                 alert('Erro ao realizar cadastro');
             }
+            console.error('Erro ao realizar cadastro:', error);
         }
     };
-
     return (
         <div className={styles['rgstr-container']}>
             <div className={styles['rgstr-content']}>
@@ -140,7 +117,6 @@ const Register = () => {
                             onChange={handleChange}
                             required 
                         />
-                        
                         <label className={styles['rgstr-label']}>CPF</label>
                         <input
                             type="text"
@@ -152,7 +128,6 @@ const Register = () => {
                             maxLength={14}
                             required 
                         />     
-                        
                         <label className={styles['rgstr-label']}>Email</label>
                         <input
                             type="email"
@@ -163,8 +138,7 @@ const Register = () => {
                             onChange={handleChange}
                             required 
                         />
-                        
-                        <label className={styles['rgstr-label']}>Curso</label>
+                                                <label className={styles['rgstr-label']}>Curso</label>
                         <Select
                             options={cursos}
                             onChange={handleCursoChange}
@@ -218,55 +192,17 @@ const Register = () => {
                             }}
                             required 
                         />
-                        
                         <label className={styles['rgstr-label']}>Senha</label>
-                        <div className={styles['password-input-wrapper']}>
-                            <input
-                                type={showPassword ? "text" : "password"}
-                                name="password"
-                                className={`${styles['rgstr-input']} ${styles['password-input']}`}
-                                placeholder="Senha"
-                                value={formData.password}
-                                onChange={handleChange}
-                                required 
-                            />
-                            <span 
-                                className={styles['password-toggle-icon']}
-                                onClick={togglePasswordVisibility}
-                            >
-                                {showPassword ? <FaEyeSlash /> : <FaEye />}
-                            </span>
-                        </div>
-                        
-                        <label className={styles['rgstr-label']}>Confirmar Senha</label>
-                        <div className={styles['password-input-wrapper']}>
-                            <input
-                                type={showConfirmPassword ? "text" : "password"}
-                                name="confirmPassword"
-                                className={`${styles['rgstr-input']} ${styles['password-input']} ${!passwordMatch && styles['password-mismatch']}`}
-                                placeholder="Confirme sua senha"
-                                value={formData.confirmPassword}
-                                onChange={handleChange}
-                                required 
-                            />
-                            <span 
-                                className={styles['password-toggle-icon']}
-                                onClick={toggleConfirmPasswordVisibility}
-                            >
-                                {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
-                            </span>
-                        </div>
-                        {!passwordMatch && (
-                            <p className={styles['error-message']}>As senhas não coincidem!</p>
-                        )}
-                        
-                        <button 
-                            type="submit" 
-                            className={styles['rgstr-btn']}
-                            disabled={!passwordMatch}
-                        >
-                            Registrar
-                        </button>
+                        <input
+                            type="password"
+                            name="password"
+                            className={styles['rgstr-input']}
+                            placeholder="Senha"
+                            value={formData.password}
+                            onChange={handleChange}
+                            required 
+                        />
+                        <button type="submit" className={styles['rgstr-btn']}>Registrar</button>
                     </form>
                 </div>
             </div>

@@ -1,0 +1,86 @@
+.sidebar{
+    position: fixed;
+    border: 2px solid #e7e7e7;
+    background-color: #f2f2f2;
+    height: 100vh;
+    padding-top: 70px;
+    width: 15vw;
+    font-family: "Poppins", sans-serif;
+}
+
+.icon {
+    margin-right: 10px;
+    font-size: 18px;
+    color: #3E238E;
+}
+
+.sb-header{
+    display: flex;
+    align-items: baseline;
+    margin-left: 1rem;
+    gap: 1rem;
+    color: #3E238E;
+}
+
+.sb-item:hover .icon {
+    color: white; 
+}
+
+.sb-item.active .icon {
+    color: white; 
+}
+
+.sb-itens{
+    margin-top: 4rem;
+}
+
+/* isso é para se aplicar apenas ao logout */
+.sb-itens ul li:last-child .sb-item {
+    margin-top: 10rem;
+}
+
+.sb-itens ul {
+    list-style-type: none;
+    padding: 1rem;
+    width: 100%;
+}
+  
+.sb-itens ul li {
+    margin: 20px 0;
+}
+  
+.sb-item {
+    width: 100%;
+    height: 3rem;
+    padding: 10px;
+    padding-left: 1.6rem;
+    background: transparent;
+    color: #3E238E;
+    border: 2px solid #3E238E;
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: left;
+    cursor: pointer;
+    border-radius: 1.6rem;
+    transition: 0.1s ease;
+    font-family: "Poppins", sans-serif;
+}
+  
+.sb-item.active{
+    border: 2px solid #3E238E;
+    text-align: left;
+    color: #f8f8ff;
+    background-color: #3E238E;
+}
+
+.sb-item:hover {
+    color: #f8f8ff;
+    border-color: #7a51f5;
+    background-color: #8258ff;
+}
+
+.sidebar h3{
+    color: #3E238E;
+    text-align: center;
+    margin-top: 1rem;
+}

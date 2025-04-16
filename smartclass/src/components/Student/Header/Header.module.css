@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 20px;
+    height: 60px;
+    background: linear-gradient(90deg, #361d7d, #6b3cf4);
+    color: white;
+    position: fixed;
+    top: 0; 
+    left: 0;
+    right: 0;
+    z-index: 1000; 
+}
+
+.title-header {
+    font-family: 'Poppins', sans-serif; 
+    font-size: 1.6rem;
+    font-weight: bold;
+    padding-left: 0.5rem;
+    color: white;
+}
