@@ -15,7 +15,7 @@ class TurmaController{
     // Metodo para obter os dados de uma turma pelo id
     static async obterTurma(turmaId){
         try{
-            const response = await api.get(`lms/tirmas/${turmaId}/`)
+            const response = await api.get(`lms/turmas/${turmaId}/`)
             return response.data;
         }catch(error){
             console.error('Erro ao obter turma:', error.response ? error.response.data : error.message);
