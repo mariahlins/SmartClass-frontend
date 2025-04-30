@@ -47,7 +47,7 @@ const Login = () => {
             };
 
             const response = await AuthController.login(dataToSend);
-            const role = "student";
+            const role = "manager";
             const name = response.user_name;
 
             localStorage.setItem('accessToken', response.access);
@@ -56,11 +56,11 @@ const Login = () => {
             if (localStorage.getItem('accessToken') && localStorage.getItem('refreshToken')) {
                 alert('Login efetuado com sucesso!');
                 if (role==="student"){
-                    console.log(response)
                     navigate('/home', {state: {name: name}});
                 }else if (role==="teacher"){
                     navigate('/home-teacher', {state: {name: name}});
                 }else if (role==="manager"){
+                    console.log(response)
                     navigate('/home-manager', {state: {name: name}});
                 }else{
                     alert('Erro ao logar!');

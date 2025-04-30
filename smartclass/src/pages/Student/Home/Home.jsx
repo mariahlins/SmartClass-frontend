@@ -1,5 +1,5 @@
 import styles from "./Home.module.css"
-import Header from '../../../components/Student/Header/Header'
+import Header from '../../../components/Header/Header'
 import SideBar from '../../../components/Student/SideBar/SideBar.jsx'
 import { useLocation } from 'react-router-dom'
 
