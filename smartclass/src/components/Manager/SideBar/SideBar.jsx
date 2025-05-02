@@ -11,7 +11,7 @@ const SideBar = () => {
         { name: 'Turmas', icon: faAddressBook, path: '/classes-manager' },
         { name: 'Cursos', icon: faBook, path: '/courses' },
         { name: 'Usuários', icon: faUsers, path: '/users' },
-        { name: 'Logout', icon: faSignOut, path: '/logout' },
+        { name: 'Logout', icon: faSignOut, path: '/' },
     ];
 
     const name = localStorage.getItem('userName') || '';
