@@ -15,7 +15,7 @@ class UserController{
     // Metodo para atualizar os dados de um usuario pelo id
     static async atualizarUsuario(userId, formData){
         try{
-            const response = await api.put(`auth/users/${userId}/`, formData);
+            const response = await api.patch(`auth/users/${userId}/update`, formData);
             return response.data;
         }catch(error){
             console.error('Erro ao atualizar usuário:', error.response ? error.response.data : error.message);

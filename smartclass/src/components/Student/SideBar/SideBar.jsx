@@ -9,7 +9,7 @@ const SideBar = () => {
         { name: 'Página Inicial', icon: faHome, path: '/home'},
         { name: 'Editar perfil', icon: faEdit, path: '/profile' },
         { name: 'Turmas', icon: faAddressBook, path: '/classes' },
-        { name: 'Logout', icon: faSignOut, path: '/logout' },
+        { name: 'Logout', icon: faSignOut, path: '/' },
     ];
 
     const name = localStorage.getItem('userName') || '';
