@@ -1,0 +1,64 @@
+.cls-manager {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    font-family: "Lexend", sans-serif;
+}
+  
+.cls-content {
+    margin-left: 250px;
+    margin-top: 10vh;
+    padding: 2rem;
+    background-color: #f9f9f9;
+    flex: 1;
+    border-radius: 1rem;
+    color: #3E238E;
+}
+  
+.user-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+  
+.user-table th,
+.user-table td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+  
+.user-table th {
+    background-color: #3E238E;
+    color: #fff;
+    font-weight: 600;
+}
+  
+.user-table tr:hover {
+    background-color: #f5f5f5;
+}
+
+.cls-pagination {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+  
+.cls-pagination button {
+    padding: 0.5rem 1rem;
+    background-color: #26155a;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+  
+.cls-pagination button:disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+}
+  
