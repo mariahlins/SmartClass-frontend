@@ -55,16 +55,17 @@ const Login = () => {
 
             localStorage.setItem('accessToken', response.access);
             localStorage.setItem('refreshToken', response.refresh);
+            localStorage.setItem('userId', id);
 
             if (localStorage.getItem('accessToken') && localStorage.getItem('refreshToken')) {
                 alert('Login efetuado com sucesso!');
                 if (role==="student"){
-                    navigate('/home', {state: {name: name, id: id}});
+                    navigate('/home', {state: {name: name}});
                 }else if (role==="teacher"){
-                    navigate('/home-teacher', {state: {name: name, id: id}});
+                    navigate('/home-teacher', {state: {name: name}});
                 }else if (role==="manager"){
                     console.log(response)
-                    navigate('/home-manager', {state: {name: name, id: id}});
+                    navigate('/home-manager', {state: {name: name}});
                 }else{
                     alert('Erro ao logar!');
                 }   
