@@ -30,6 +30,9 @@
     padding: 0.5rem 1rem;
     font-size: 1rem;
     cursor: pointer;
+    font-weight: 600;
+    font-family: "Lexend", sans-serif;
+    transition: background-color 0.2s, color 0.2s ease-in-out;
 }
   
 .cm-header button:hover {
@@ -106,10 +109,12 @@
 .modal-content h2 {
     margin-top: 0;
     font-size: 1.5rem;
+    margin-bottom: 1rem;
 }
   
-  .form-group {
+.form-group {
     margin-bottom: 1rem;
+    font-family: "Poppins", sans-serif;
 }
   
 .form-group label {
@@ -124,6 +129,11 @@
     border-radius: 8px;
 }
   
+.form-group input:focus, .form-group select:focus {
+    border-color: #8e8e8e;
+    outline: none;
+}
+
 .form-buttons {
     display: flex;
     justify-content: space-between;
