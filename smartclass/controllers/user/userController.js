@@ -22,6 +22,16 @@ class UserController{
             throw error;
         }
     }
+
+    static async obterTodosUsuarios() {
+        try {
+          const response = await api.get('auth/users/');
+          return response.data;
+        } catch (error) {
+          console.error('Erro ao obter lista de usuários:', error.response ? error.response.data : error.message);
+          throw error;
+        }
+    }
 }
 
 export default UserController;
