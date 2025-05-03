@@ -47,8 +47,11 @@ const Login = () => {
             };
 
             const response = await AuthController.login(dataToSend);
-            const role = "manager";
+            console.log(response)
+            const role = response.user_role;
+            // const role = "student";
             const name = response.user_name;
+            const id = response.user_id;
 
             localStorage.setItem('accessToken', response.access);
             localStorage.setItem('refreshToken', response.refresh);
@@ -56,12 +59,12 @@ const Login = () => {
             if (localStorage.getItem('accessToken') && localStorage.getItem('refreshToken')) {
                 alert('Login efetuado com sucesso!');
                 if (role==="student"){
-                    navigate('/home', {state: {name: name}});
+                    navigate('/home', {state: {name: name, id: id}});
                 }else if (role==="teacher"){
-                    navigate('/home-teacher', {state: {name: name}});
+                    navigate('/home-teacher', {state: {name: name, id: id}});
                 }else if (role==="manager"){
                     console.log(response)
-                    navigate('/home-manager', {state: {name: name}});
+                    navigate('/home-manager', {state: {name: name, id: id}});
                 }else{
                     alert('Erro ao logar!');
                 }   
