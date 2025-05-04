@@ -138,7 +138,7 @@ const Register = () => {
                             onChange={handleChange}
                             required 
                         />
-                                                <label className={styles['rgstr-label']}>Curso</label>
+                        <label className={styles['rgstr-label']}>Curso</label>
                         <Select
                             options={cursos}
                             onChange={handleCursoChange}

@@ -161,8 +161,6 @@ const ClassesManager = () => {
     }
   };
 
-
-
   const handleDeleteTurma = async () => {
     try {
       await TurmaController.deletarTurma(selectedTurma.id);
