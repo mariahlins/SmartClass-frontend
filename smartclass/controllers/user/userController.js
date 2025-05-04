@@ -23,6 +23,7 @@ class UserController{
         }
     }
 
+    // Metodo para listar todos os usuarios
     static async obterTodosUsuarios() {
         try {
           const response = await api.get('auth/users/');
@@ -30,6 +31,17 @@ class UserController{
         } catch (error) {
           console.error('Erro ao obter lista de usuários:', error.response ? error.response.data : error.message);
           throw error;
+        }
+    }
+
+    // Metodo para deletar um usuario pelo id
+    static async deletarUsuario(userId){
+        try{
+            const response = await api.delete(`auth/users/${userId}/delete`);
+            return response.data;
+        }catch(error){
+            console.error('Erro ao deletar usuário:', error.response ? error.response.data : error.message);
+            throw error;
         }
     }
 }

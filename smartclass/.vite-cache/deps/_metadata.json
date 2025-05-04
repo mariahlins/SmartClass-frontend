@@ -1,73 +1,73 @@
 {
-  "hash": "b8cd4650",
-  "configHash": "a24ddab8",
+  "hash": "5b8a72a7",
+  "configHash": "00dcc4e5",
   "lockfileHash": "5e8707f6",
-  "browserHash": "58a1bdc4",
+  "browserHash": "7f7867cd",
   "optimized": {
     "react": {
       "src": "../../node_modules/react/index.js",
       "file": "react.js",
-      "fileHash": "668f84cf",
+      "fileHash": "ca5d797e",
       "needsInterop": true
     },
     "react-dom": {
       "src": "../../node_modules/react-dom/index.js",
       "file": "react-dom.js",
-      "fileHash": "ea2baa9f",
+      "fileHash": "8a7025f9",
       "needsInterop": true
     },
     "react/jsx-dev-runtime": {
       "src": "../../node_modules/react/jsx-dev-runtime.js",
       "file": "react_jsx-dev-runtime.js",
-      "fileHash": "951a0e33",
+      "fileHash": "dd03c8f1",
       "needsInterop": true
     },
     "react/jsx-runtime": {
       "src": "../../node_modules/react/jsx-runtime.js",
       "file": "react_jsx-runtime.js",
-      "fileHash": "ef9de4a7",
+      "fileHash": "0b9ad194",
       "needsInterop": true
     },
     "@fortawesome/free-solid-svg-icons": {
       "src": "../../node_modules/@fortawesome/free-solid-svg-icons/index.mjs",
       "file": "@fortawesome_free-solid-svg-icons.js",
-      "fileHash": "2849eb97",
+      "fileHash": "e3091517",
       "needsInterop": false
     },
     "@fortawesome/react-fontawesome": {
       "src": "../../node_modules/@fortawesome/react-fontawesome/index.es.js",
       "file": "@fortawesome_react-fontawesome.js",
-      "fileHash": "36b3537b",
+      "fileHash": "03297a14",
       "needsInterop": false
     },
     "axios": {
       "src": "../../node_modules/axios/index.js",
       "file": "axios.js",
-      "fileHash": "32a5d053",
+      "fileHash": "fbaec8fb",
       "needsInterop": false
     },
     "react-dom/client": {
       "src": "../../node_modules/react-dom/client.js",
       "file": "react-dom_client.js",
-      "fileHash": "6c03a2fa",
+      "fileHash": "b5e1d728",
       "needsInterop": true
     },
     "react-icons/fa": {
       "src": "../../node_modules/react-icons/fa/index.mjs",
       "file": "react-icons_fa.js",
-      "fileHash": "4bb77c74",
+      "fileHash": "06c17fed",
       "needsInterop": false
     },
     "react-router-dom": {
       "src": "../../node_modules/react-router-dom/dist/index.mjs",
       "file": "react-router-dom.js",
-      "fileHash": "570daf4b",
+      "fileHash": "92739002",
       "needsInterop": false
     },
     "react-select": {
       "src": "../../node_modules/react-select/dist/react-select.esm.js",
       "file": "react-select.js",
-      "fileHash": "be082002",
+      "fileHash": "77df9179",
       "needsInterop": false
     }
   },
