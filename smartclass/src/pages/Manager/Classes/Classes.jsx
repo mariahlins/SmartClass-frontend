@@ -5,23 +5,36 @@ import SideBar from "../../../components/Manager/SideBar/SideBar";
 import TurmaController from "../../../../controllers/lms/turmaController"; 
 import CursoController from "../../../../controllers/lms/cursoController"; 
 import userController from "../../../../controllers/user/userController"; 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPen, faUserGroup, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 const ClassesManager = () => {
   const [turmas, setTurmas] = useState([]);
   const [cursos, setCursos] = useState([]);
   const [professores, setProfessores] = useState([]);
+  const [alunos, setAlunos] = useState([]);
+  const [selectedTurma, setSelectedTurma] = useState(null);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [showAlunosModal, setShowAlunosModal] = useState(false);
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
   const [formData, setFormData] = useState({
     nome: "",
     curso_id: "",
     materia: "",
     professor: "",
   });
+  const [editFormData, setEditFormData] = useState({
+    nome: "",
+    curso_id: "",
+    materia: "",
+    professor: "",
+  });
 
-  const [currentPage, setCurrentPage] = useState(1); // Página atual
-  const [turmasPerPage] = useState(7); // Número máximo de turmas por página
-
+  const [currentPage, setCurrentPage] = useState(1);  
+  const [turmasPerPage] = useState(7); 
+  
   useEffect(() => {
     async function carregarTurmas() {
       try {
@@ -55,18 +68,71 @@ const ClassesManager = () => {
       }
     }
 
+    async function carregarAlunos() {
+      try {
+        const alunosData = await userController.obterTodosUsuarios();
+        setAlunos(alunosData);
+      } catch (error) {
+        console.error('Erro ao buscar alunos:', error);
+      }
+    }
+
     carregarTurmas();
     carregarCursos();
     carregarProfessores();
+    carregarAlunos();
   }, []);
 
   const handleModalToggle = () => {
     setShowModal(!showModal);
   };
 
+  const handleEditModalToggle = (turma = null) => {
+    if (turma) {
+      setSelectedTurma(turma);
+      setEditFormData({
+        nome: turma.nome,
+        curso_id: turma.curso?.id || "",
+        materia: turma.materia,
+        professor: turma.professor,
+      });
+      setShowEditModal(true);
+    } else {
+      setShowEditModal(false);
+      setSelectedTurma(null);
+    }
+  };
+
+  const handleAlunosModalToggle = (turma = null) => {
+    if (turma) {
+      setSelectedTurma(turma);
+      setShowAlunosModal(true);
+    } else {
+      setShowAlunosModal(false);
+      setSelectedTurma(null);
+    }
+  };
+
+  const handleDeleteConfirmationToggle = (turma = null) => {
+    if (turma) {
+      setSelectedTurma(turma);
+      setShowDeleteConfirmation(true);
+    } else {
+      setShowDeleteConfirmation(false);
+      setSelectedTurma(null);
+    }
+  };
+
   const handleInputChange = (e) => {
     setFormData({
       ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleEditInputChange = (e) => {
+    setEditFormData({
+      ...editFormData,
       [e.target.name]: e.target.value,
     });
   };
@@ -83,7 +149,31 @@ const ClassesManager = () => {
     }
   };
 
-  // Lógica de paginação
+  const handleEditSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await TurmaController.editarTurma(selectedTurma.id, editFormData);
+      handleEditModalToggle();
+      const response = await TurmaController.listarTurmas();
+      setTurmas(response);
+    } catch (error) {
+      console.error("Erro ao editar turma:", error.message);
+    }
+  };
+
+
+
+  const handleDeleteTurma = async () => {
+    try {
+      await TurmaController.deletarTurma(selectedTurma.id);
+      handleDeleteConfirmationToggle();
+      const response = await TurmaController.listarTurmas();
+      setTurmas(response);
+    } catch (error) {
+      console.error("Erro ao deletar turma:", error.message);
+    }
+  };
+
   const indexOfLastTurma = currentPage * turmasPerPage;
   const indexOfFirstTurma = indexOfLastTurma - turmasPerPage;
   const currentTurmas = turmas.slice(indexOfFirstTurma, indexOfLastTurma);
@@ -114,6 +204,7 @@ const ClassesManager = () => {
                   <th>Matéria</th>
                   <th>ID do Professor</th>
                   <th>Curso</th>
+                  <th>Ações</th>
                 </tr>
               </thead>
               <tbody>
@@ -123,6 +214,26 @@ const ClassesManager = () => {
                     <td>{turma.materia}</td>
                     <td>{turma.professor}</td>
                     <td>{turma.curso?.nome || "Não informado"}</td>
+                    <td className={styles["action-buttons"]}>
+                      <button 
+                        onClick={() => handleEditModalToggle(turma)}
+                        className={styles["edit-button"]}
+                      >
+                        <FontAwesomeIcon icon={faPen} />
+                      </button>
+                      <button 
+                        onClick={() => handleAlunosModalToggle(turma)}
+                        className={styles["alunos-button"]}
+                      >
+                        <FontAwesomeIcon icon={faUserGroup} />
+                      </button>
+                      <button 
+                        onClick={() => handleDeleteConfirmationToggle(turma)}
+                        className={styles["delete-button"]}
+                      >
+                        <FontAwesomeIcon icon={faTrash} />
+                      </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -225,6 +336,135 @@ const ClassesManager = () => {
                 <button type="submit" className={styles["cm-criar"]}>Criar Turma</button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {showEditModal && (
+        <div className={styles.modal}>
+          <div className={styles["modal-content"]}>
+            <h2>Editar Turma</h2>
+            <form onSubmit={handleEditSubmit}>
+              <div className={styles["form-group"]}>
+                <label>Nome da Turma</label>
+                <input
+                  type="text"
+                  name="nome"
+                  value={editFormData.nome}
+                  onChange={handleEditInputChange}
+                  required
+                />
+              </div>
+
+              <div className={styles["form-group"]}>
+                <label>Curso</label>
+                <select
+                  name="curso_id"
+                  value={editFormData.curso_id}
+                  onChange={handleEditInputChange}
+                  required
+                >
+                  <option value="">Selecione um curso</option>
+                  {cursos.map((curso) => (
+                    <option key={curso.value} value={curso.value}>
+                      {curso.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className={styles["form-group"]}>
+                <label>Nome da matéria</label>
+                <input
+                  type="text"
+                  name="materia"
+                  value={editFormData.materia}
+                  onChange={handleEditInputChange}
+                  required
+                />
+              </div>
+
+              <div className={styles["form-group"]}>
+                <label>Professor</label>
+                <select
+                  name="professor"
+                  value={editFormData.professor}
+                  onChange={handleEditInputChange}
+                  required
+                >
+                  <option value="">Selecione um professor</option>
+                  {professores.map((professor) => (
+                    <option key={professor.id} value={professor.id}>
+                      {professor.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className={styles["form-buttons"]}>
+                <button type="button" 
+                        onClick={() => handleEditModalToggle()}
+                        className={styles["cm-cancel-button"]}>
+                  Cancelar
+                </button>
+                <button type="submit" className={styles["cm-criar"]}>Salvar Alterações</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {showAlunosModal && (
+        <div className={styles.modal}>
+          <div className={styles["modal-content"]}>
+            <h2>Alunos da Turma: {selectedTurma?.nome}</h2>
+            <div className={styles["alunos-list"]}>
+              {selectedTurma?.alunos && selectedTurma.alunos.length > 0 ? (
+                <ul className={styles["alunos-view-list"]}>
+                  {selectedTurma.alunos.map((alunoId) => {
+                    const aluno = alunos.find(a => a.id === alunoId);
+                    return (
+                      <li key={alunoId} className={styles["aluno-view-item"]}>
+                        {aluno ? aluno.name : `Aluno ID: ${alunoId}`}
+                      </li>
+                    );
+                  })}
+                </ul>
+              ) : (
+                <p>Esta turma não possui alunos.</p>
+              )}
+            </div>
+
+            <div className={styles["form-buttons"]}>
+            <button style={{backgroundColor:"#fff", border:"none"}}></button>
+              <button type="button" 
+                      onClick={() => handleAlunosModalToggle()}
+                      className={styles["cm-cancel-button"]}>
+                Fechar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showDeleteConfirmation && (
+        <div className={styles.modal}>
+          <div className={styles["modal-content"]}>
+            <h2>Confirmar Exclusão</h2>
+            <p>Tem certeza que deseja excluir a turma "{selectedTurma?.nome}"?</p>
+            <div className={styles["form-buttons"]} style={{marginTop:"20px"}}>
+              <button type="button" 
+                      onClick={() => handleDeleteConfirmationToggle()}
+                      className={styles["cm-cancel-button"]}>
+                Cancelar
+              </button>
+              <button 
+                onClick={handleDeleteTurma}
+                className={styles["delete-confirm-button"]}
+              >
+                Confirmar Exclusão
+              </button>
+            </div>
           </div>
         </div>
       )}

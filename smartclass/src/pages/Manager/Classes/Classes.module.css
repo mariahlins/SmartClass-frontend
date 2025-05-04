@@ -104,6 +104,7 @@
     position: relative;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
     color: #3E238E;
+    font-family: "Poppins", sans-serif;
 }
   
 .modal-content h2 {
@@ -112,6 +113,12 @@
     margin-bottom: 1rem;
 }
   
+.alunos-list{
+    padding: 1rem;
+    overflow: auto;
+    height: 40vh;
+}
+
 .form-group {
     margin-bottom: 1rem;
     font-family: "Poppins", sans-serif;
@@ -137,6 +144,7 @@
 .form-buttons {
     display: flex;
     justify-content: space-between;
+    font-family: "Lexend", sans-serif;
 }
   
 .cm-criar {
@@ -198,4 +206,23 @@
 .cm-pagination button:disabled {
     background-color: #aaa;
     cursor: not-allowed;
+}
+
+.action-buttons{
+    display: flex;
+    gap: 0.5rem;
+}
+
+.delete-confirm-button{
+    padding: 0.5rem 1rem;
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 200ms ease-in-out;
+}
+
+.delete-confirm-button:hover{
+    background-color: #9c291c;
 }
