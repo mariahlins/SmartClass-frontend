@@ -15,19 +15,33 @@ import ClassesManager from './pages/Manager/Classes/Classes.jsx'
 import ProfileManager from './pages/Manager/Profile/Profile.jsx'
 import UsersManager from './pages/Manager/Users/Users.jsx'
 
+import HomeTeacher from './pages/Teacher/Home/Home.jsx'
+import CoursesTeacher from './pages/Teacher/Courses/Courses.jsx'
+import ClassesTeacher from './pages/Teacher/Classes/Classes.jsx'
+import ProfileTeacher from './pages/Teacher/Profile/Profile.jsx'
+
+import ClassDetails from './components/ClassDetails/ClassDetails.jsx'
+
 const router = createBrowserRouter([
   { path: "/", element: <Login /> },
   { path: "/register", element: <Register /> },
 
-  {path: "/home", element: <HomeStudent /> },
-  {path: "/profile", element: <ProfileStudent /> },
-  
-  {path: "/home-manager", element: <HomeManager /> },
-  {path: "/profile-manager", element: <ProfileManager /> },
-  {path: "/courses", element: <CoursesManager /> },
-  {path: "/classes-manager", element: <ClassesManager /> },
-  {path: "/users", element: <UsersManager /> }
-])
+  { path: "/home-student", element: <HomeStudent /> },
+  { path: "/profile-student", element: <ProfileStudent /> },
+
+  { path: "/home-manager", element: <HomeManager /> },
+  { path: "/profile-manager", element: <ProfileManager /> },
+  { path: "/courses-manager", element: <CoursesManager /> },
+  { path: "/classes-manager", element: <ClassesManager /> },
+  { path: "/users-manager", element: <UsersManager /> },
+
+  { path: "/home-teacher", element: <HomeTeacher /> },
+  { path: "/courses-teacher", element: <CoursesTeacher /> },
+  { path: "/classes-teacher", element: <ClassesTeacher /> },
+  { path: "/profile-teacher", element: <ProfileTeacher /> },
+
+  { path: "/classes/:id", element: <ClassDetails /> },
+]);
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
