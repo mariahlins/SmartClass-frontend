@@ -9,7 +9,7 @@ const SideBar = () => {
         { name: 'Página Inicial', icon: faHome, path: '/home-manager'},
         { name: 'Editar perfil', icon: faUserEdit, path: '/profile-manager' },
         { name: 'Turmas', icon: faAddressBook, path: '/classes-manager' },
-        { name: 'Cursos', icon: faBook, path: '/courses' },
+        { name: 'Cursos', icon: faBook, path: '/courses-manager' },
         { name: 'Usuários', icon: faUsers, path: '/users' },
         { name: 'Logout', icon: faSignOut, path: '/' },
     ];

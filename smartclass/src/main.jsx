@@ -33,7 +33,7 @@ const router = createBrowserRouter([
   { path: "/profile-manager", element: <ProfileManager /> },
   { path: "/courses-manager", element: <CoursesManager /> },
   { path: "/classes-manager", element: <ClassesManager /> },
-  { path: "/users-manager", element: <UsersManager /> },
+  { path: "/users", element: <UsersManager /> },
 
   { path: "/home-teacher", element: <HomeTeacher /> },
   { path: "/courses-teacher", element: <CoursesTeacher /> },

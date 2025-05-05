@@ -3,18 +3,19 @@ import styles from "./Users.module.css";
 import Header from "../../../components/Header/Header";
 import SideBar from "../../../components/Manager/SideBar/SideBar";
 import UserController from "../../../../controllers/user/userController";
-import AuthController from "../../../../controllers/authController";
 import CursoController from "../../../../controllers/lms/cursoController";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
+import NewManager from "../../../components/Manager/Modal/NewManager";
+import NewStudent from "../../../components/Manager/Modal/NewStudent";
+import NewTeacher from "../../../components/Manager/Modal/NewTeacher";
 
 const UsersManager = () => {
 	const [users, setUsers] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [currentPage, setCurrentPage] = useState(1);
 	const [selectedUser, setSelectedUser] = useState(null);
-	const [showModal, setShowModal] = useState(false);
-	const [cursos, setCursos] = useState([]);
+	const [activeModal, setActiveModal] = useState(null);
 	const [showEditModal, setShowEditModal] = useState(false);
 	const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
 	const [editFormData, setEditFormData] = useState({
@@ -25,31 +26,23 @@ const UsersManager = () => {
 		is_teacher: false,
 		is_student: false
 	});
-	const [formData, setFormData] = useState({
-			name: "",
-			cpf: "",
-			email: "",
-			password: "",
-			role:"",
-			curso:"",
-			is_manager: false,
-			is_teacher: false,
-			is_student: false
-	});
 	
 	const itemsPerPage = 7;
 
-	useEffect(() => {
-		async function carregarUsuarios() {
-			try {
-				const response = await UserController.obterTodosUsuarios();
-				setUsers(response);
-				setLoading(false);
-			} catch (error) {
-				console.error("Erro ao carregar usuários:", error.message);
-			}
+	const loadUsers = async () => {
+		try {
+			setLoading(true);
+			const response = await UserController.obterTodosUsuarios();
+			setUsers(response);
+			setLoading(false);
+		} catch (error) {
+			console.error("Erro ao carregar usuários:", error.message);
+			setLoading(false);
 		}
-		carregarUsuarios();
+	};
+
+	useEffect(() => {
+		loadUsers();
 	}, []);
 
 	const getUserRole = (user) => {
@@ -100,8 +93,7 @@ const UsersManager = () => {
 		try {
 			await UserController.atualizarUsuario(selectedUser.id, editFormData);
 			handleEditModalToggle();
-			const response = await UserController.obterTodosUsuarios();
-			setUsers(response);
+			await loadUsers();
 		} catch (error) {
 			console.error("Erro ao editar usuário:", error.message);
 		}
@@ -111,55 +103,20 @@ const UsersManager = () => {
 		try {
 			await UserController.deletarUsuario(selectedUser.id);
 			handleDeleteConfirmationToggle();
-			const response = await UserController.obterTodosUsuarios();
-			setUsers(response);
+			await loadUsers();
 		} catch (error) {
 			console.error("Erro ao deletar usuário:", error.message);
 		}
 	};
 
-	const handleModalToggle = () => {
-		setShowModal(!showModal);
+	const toggleModal = (modalType) => {
+		setActiveModal(activeModal === modalType ? null : modalType);
 	};
 
-	const handleInputChange = (e) => {
-		setFormData({
-			...formData,
-			[e.target.name]: e.target.value,
-		});
-	};
-
-	const handleSubmit = async (e) => {
-		e.preventDefault();
-		try {
-			formData.role = formData.is_manager ? "manager" : formData.is_teacher ? "teacher" : "student";
-			const responsereg = await AuthController.register(formData);
-			console.log(responsereg)
-			handleModalToggle();
-			const response = await UserController.obterTodosUsuarios();
-			setUsers(response);
-		} catch (error) {
-			console.error("Erro ao criar turma:", error.message);
-		}
-	};
-
-	useEffect(() => {
-		async function carregarCursos() {
-			try {
-				const cursos = await CursoController.listar();
-				const formattedCursos = cursos.map(curso => ({
-					value: curso.id,
-					label: curso.nome,
-				}));
-				setCursos(formattedCursos);
-			} catch (error) {
-				console.error('Erro ao buscar cursos:', error);
-			}
-		}
-	
-		carregarCursos();
-	}, []);
-
+	const handleUserCreated = () => {
+		loadUsers();
+		setActiveModal(null); 
+	  };
 
 	const totalPages = Math.ceil(users.length / itemsPerPage);
 	const startIndex = (currentPage - 1) * itemsPerPage;
@@ -177,8 +134,12 @@ const UsersManager = () => {
 			<SideBar />
 			<main className={styles["cls-content"]}>
 				<div className={styles["cls-header"]}>
-					<h1>Turmas</h1>
-					<button onClick={handleModalToggle}>Criar novo usuário</button>
+					<h1>Usuários</h1>
+					<div style={{ display: "flex", gap: "10px" }}>
+						<button onClick={() => toggleModal('manager')}>Add Manager</button>
+						<button onClick={() => toggleModal('student')}>Add Student</button>
+						<button onClick={() => toggleModal('teacher')}>Add Teacher</button>
+					</div>
 				</div>
 				{loading ? (
 					<p>Carregando...</p>
@@ -240,121 +201,23 @@ const UsersManager = () => {
 				)}
 			</main>
 
-			{showModal && (
-				<div className={styles.modal}>
-					<div className={styles["modal-content"]}>
-						<h2>Criar novo usuário</h2>
-						<form onSubmit={handleSubmit}>
-						<div className={styles["form-group"]}>
-								<label>Nome</label>
-								<input
-									type="text"
-									name="name"
-									value={formData.name}
-									onChange={handleInputChange}
-									required
-								/>
-							</div>
-
-							<div className={styles["form-group"]}>
-								<label>Email</label>
-								<input
-									type="email"
-									name="email"
-									value={formData.email}
-									onChange={handleInputChange}
-									required
-								/>
-							</div>
-
-							<div className={styles["form-group"]}>
-								<label>CPF</label>
-								<input
-									type="text"
-									name="cpf"
-									value={formData.cpf}
-									onChange={handleInputChange}
-									required
-								/>
-							</div>
-							
-							<div className={styles["form-group"]}>
-								<label>Senha</label>
-								<input
-									type="password"
-									name="password"
-									value={formData.password}
-									onChange={handleInputChange}
-									required
-								/>
-							</div>
-
-							<div className={styles["form-group-checkboxes"]}>
-								<div className={styles["checkbox-item"]}>
-									<input
-										type="checkbox"
-										id="is_manager"
-										name="is_manager"
-										checked={formData.is_manager}
-										onChange={handleInputChange}
-									/>
-									<label htmlFor="is_manager">Administrador</label>
-								</div>
-
-								<div className={styles["checkbox-item"]}>
-									<input
-										type="checkbox"
-										id="is_teacher"
-										name="is_teacher"
-										checked={formData.is_teacher}
-										onChange={handleInputChange}
-									/>
-									<label htmlFor="is_teacher">Professor</label>
-								</div>
-
-								<div className={styles["checkbox-item"]}>
-									<input
-										type="checkbox"
-										id="is_student"
-										name="is_student"
-										checked={formData.is_student}
-										onChange={handleInputChange}
-									/>
-									<label htmlFor="is_student">Estudante</label>
-								</div>
-								{formData.is_student && (
-									<div className={styles["form-group"]}>
-								    <label>Curso</label>
-								    <select
-						    			name="curso_id"
-				    					value={formData.curso_id}
-		    							onChange={handleInputChange}
-    									required
-							    	>
-						    			<option value="">Selecione um curso</option>
-				    					{cursos.map((curso) => (
-		    								<option key={curso.value} value={curso.value}>
-    											{curso.label}
-										    </option>
-								    	))}
-								    </select>
-							    </div>
-								)}
-							</div>
- 
-							<div className={styles["form-buttons"]}>
-								<button type="button" 
-												onClick={handleModalToggle}
-												className={styles["cm-cancel-button"]}>
-									Cancelar
-								</button>
-								<button type="submit" className={styles["cm-criar"]}>Criar Turma</button>
-							</div>
-						</form>
-					</div>
-				</div>
-			)}
-
+			<NewManager 
+				isOpen={activeModal === 'manager'}
+				onClose={() => toggleModal('manager')}
+				onUserCreated={handleUserCreated}
+			/>
+			
+			<NewStudent 
+				isOpen={activeModal === 'student'}
+				onClose={() => toggleModal('student')}
+				onUserCreated={handleUserCreated}
+			/>
+			
+			<NewTeacher 
+				isOpen={activeModal === 'teacher'}
+				onClose={() => toggleModal('teacher')}
+				onUserCreated={handleUserCreated}
+			/>
 
 			{showEditModal && (
 				<div className={styles.modal}>
@@ -392,41 +255,6 @@ const UsersManager = () => {
 									onChange={handleEditInputChange}
 									required
 								/>
-							</div>
-
-							<div className={styles["form-group-checkboxes"]}>
-								<div className={styles["checkbox-item"]}>
-									<input
-										type="checkbox"
-										id="is_manager"
-										name="is_manager"
-										checked={editFormData.is_manager}
-										onChange={handleEditInputChange}
-									/>
-									<label htmlFor="is_manager">Administrador</label>
-								</div>
-
-								<div className={styles["checkbox-item"]}>
-									<input
-										type="checkbox"
-										id="is_teacher"
-										name="is_teacher"
-										checked={editFormData.is_teacher}
-										onChange={handleEditInputChange}
-									/>
-									<label htmlFor="is_teacher">Professor</label>
-								</div>
-
-								<div className={styles["checkbox-item"]}>
-									<input
-										type="checkbox"
-										id="is_student"
-										name="is_student"
-										checked={editFormData.is_student}
-										onChange={handleEditInputChange}
-									/>
-									<label htmlFor="is_student">Estudante</label>
-								</div>
 							</div>
 
 							<div className={styles["form-buttons"]}>
