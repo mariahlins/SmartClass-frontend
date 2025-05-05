@@ -11,7 +11,8 @@ const ProfileStudent = () => {
     name: "",
     email: "",
     cpf: "",
-    curso: ""
+    curso: "",
+    password:"",
   });
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState({ text: "", type: "" });
@@ -185,22 +186,36 @@ const ProfileStudent = () => {
                 </div>
                 
                 {editMode && (
-                  <div className={styles["button-group"]}>
-                  <button 
-                      type="button" 
-                      className={styles["cancel-button"]} 
-                      onClick={handleCancel}
-                      disabled={loading}
-                    >
-                      Cancelar
-                    </button>
-                    <button 
-                      type="submit" 
-                      className={styles["save-button"]}
-                      disabled={loading}
-                    >
-                      {loading ? "Salvando..." : "Salvar"}
-                    </button>
+                  <div>
+                      <div className={styles["form-group"]}>
+                          <label htmlFor="name">Senha:</label>
+                          <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            value={formData.password}
+                            onChange={handleChange}
+                            disabled={!editMode}
+                            className={!editMode ? styles["disabled-input"] : ""}
+                          />
+                      </div>
+                      <div className={styles["button-group"]}>
+                      <button 
+                          type="button" 
+                          className={styles["cancel-button"]} 
+                          onClick={handleCancel}
+                          disabled={loading}
+                        >
+                          Cancelar
+                        </button>
+                        <button 
+                          type="submit" 
+                              className={styles["save-button"]}
+                          disabled={loading}
+                        >
+                          {loading ? "Salvando..." : "Salvar"}
+                        </button>
+                      </div>
                   </div>
                 )}
               </form>

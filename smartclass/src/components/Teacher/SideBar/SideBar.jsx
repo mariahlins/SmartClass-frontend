@@ -1,15 +1,25 @@
 import styles from './SideBar.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHome, faUserEdit, faSignOut, faUser, faTasks } from '@fortawesome/free-solid-svg-icons'
+import { 
+  faHome, 
+  faUserEdit, 
+  faSignOutAlt, 
+  faUser, 
+  faChalkboardTeacher, 
+  faBook, 
+  faTasks 
+} from '@fortawesome/free-solid-svg-icons'
 import { Link, useLocation } from 'react-router-dom'
 
 const SideBar = () => {
     const location = useLocation();
     const menuItems = [
-        { name: 'Página Inicial', icon: faHome, path: '/home'},
-        { name: 'Editar perfil', icon: faUserEdit, path: '/profile' },
-        { name: 'Atividades', icon: faTasks, path: '/lessons' },
-        { name: 'Logout', icon: faSignOut, path: '/' },
+        { name: 'Página Inicial', icon: faHome, path: '/home-teacher'},
+        { name: 'Editar perfil', icon: faUserEdit, path: '/profile-teacher' },
+        { name: 'Turmas', icon: faChalkboardTeacher, path: '/classes-teacher' },
+        { name: 'Cursos', icon: faBook, path: '/courses-teacher' },
+        { name: 'Atividades', icon: faTasks, path: '/lesson-teacher' },
+        { name: 'Logout', icon: faSignOutAlt, path: '/' },
     ];
 
     const name = localStorage.getItem('userName') || '';
