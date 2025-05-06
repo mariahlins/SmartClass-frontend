@@ -12,6 +12,17 @@ class AtividadeController{
         }
     }
 
+    // Metodo que dado o id de um usuario (aluno ou professor) retorna as atividades desse usuario
+    static async obterAtividadesUsuario(usuarioId){
+        try{
+            const response = await api.get(`lmas/atividades/${usuarioId}/get_atividades_usuario/`);
+            return response.data;
+        }catch(error){
+            console.error('Erro ao obter atividades do usuario:', error.response ? error.response.data : error.message);
+            throw error;
+        }
+    }
+
     // Metodo que lista todas as atividades cadastradas no sistema pelos professores
     static async listarAtividades(){
         try{

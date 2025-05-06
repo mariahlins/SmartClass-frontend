@@ -34,6 +34,28 @@ class TurmaController{
         }
     }
 
+    // Metodo que dado o id de uma turma retorna as atividades dessa turma
+    static async obterAtividadesTurma(turmaId){
+        try{
+            const response = await api.get(`lms/turmas/${turmaId}/get_atividades_turma/`)
+            return response.data;
+        }catch(error){
+            console.error('Erro ao obter atividades da turma:', error.response ? error.response.data : error.message);
+            throw error;
+        }
+    }
+
+    // Metodo que dado o id de um professor retorna as turmas desse professor
+    static async obterTurmasProfesor(professorId){
+        try{
+            const response = await api.get(`lms/turmas/${professorId}/get_turmas_professor/`)
+            return response.data;
+        }catch(error){
+            console.error('Erro ao obter turmas do professor:', error.response ? error.response.data : error.message);
+            throw error;
+        }
+    }
+
     // Metodo destinado ao professor para criar uma nova turma
     static async criarTurma(formData){
         try{

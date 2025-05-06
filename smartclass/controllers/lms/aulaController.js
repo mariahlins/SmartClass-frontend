@@ -24,6 +24,17 @@ class AulaController{
         }
     }
 
+    // Metodo que dado o id de uma turma retorna as aulas dessa turma
+    static async obterAulasTurma(turmaId){
+        try{
+            const response = await api.get(`lms/aulas/${turmaId}/get_aulas_turma/`);
+            return response.data;
+        }catch(error){
+            console.error('Erro ao obter aulas da turma:', error.response ? error.response.data : error.message);
+            throw error;
+        }
+    }
+
     // Metodo em que os alunos podem realizar o download do conteudo de uma aula
     static async downloadConteudoAula(aulaId){
         try{
