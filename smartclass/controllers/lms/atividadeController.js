@@ -15,7 +15,7 @@ class AtividadeController{
     // Metodo que dado o id de um usuario (aluno ou professor) retorna as atividades desse usuario
     static async obterAtividadesUsuario(usuarioId){
         try{
-            const response = await api.get(`lmas/atividades/${usuarioId}/get_atividades_usuario/`);
+            const response = await api.get(`lms/atividades/${usuarioId}/get_atividades_usuario/`);
             return response.data;
         }catch(error){
             console.error('Erro ao obter atividades do usuario:', error.response ? error.response.data : error.message);
