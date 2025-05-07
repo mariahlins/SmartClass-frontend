@@ -1,18 +1,17 @@
 import styles from "./Home.module.css"
 import Header from '../../../components/Header/Header'
 import SideBar from '../../../components/Student/SideBar/SideBar.jsx'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import TurmaController from "../../../../controllers/lms/turmaController.js"
 import { useEffect, useState } from "react"
 
 const HomeStudent = () => {
   const location = useLocation()
+  const navigate = useNavigate()
   // eslint-disable-next-line no-unused-vars
   const { name } = location.state || { name: '' }
-  const { id } = location.state || { id: '' }
-  console.log("ID ALUNO", id)
-  localStorage.setItem('userId', id);
-
+  const id = localStorage.getItem('userId')
+  console.log('ID do aluno:', id)
   
   const [turmas, setTurmas] = useState([])
   const [mensagem, setMensagem] = useState('')
@@ -29,7 +28,8 @@ const HomeStudent = () => {
       try {
         setLoading(true)
         const response = await TurmaController.listarTurmasAluno(id)
-        setTurmas(response.data || [])
+        console.log('Turmas do aluno:', response)
+        setTurmas(response || [])
         setLoading(false)
       } catch (error) {
         console.error('Erro ao buscar informações:', error.response ? error.response.data : error.message)
@@ -47,6 +47,10 @@ const HomeStudent = () => {
     fetchInfo()
   }, [id])
 
+  const handleMateriaClick = (turmaId) => {
+    navigate(`/classes/${turmaId}`, {state: 1});
+  };
+
   return (
     <div className={styles['hs-container']}>
       <SideBar />
@@ -54,6 +58,7 @@ const HomeStudent = () => {
       <div className={styles['hs-content']}>
         <div className={styles["hs-turmas"]}>
           <h1>Portal do Aluno</h1>
+          <h2>Listagem de turmas atuais</h2>
           
           {loading ? (
             <p>Carregando turmas...</p>
@@ -63,12 +68,29 @@ const HomeStudent = () => {
             </div>
           ) : turmas.length > 0 ? (
             <div className={styles['turmas-container']}>
-              {turmas.map((turma) => (
-                <div key={turma.id} className={styles['turma-card']}>
-                  <h3>{turma.nome}</h3>
-                  {/* Adicione mais informações das turmas aqui */}
-                </div>
-              ))}
+              <table className={styles["class-table"]}>
+                <thead>
+                  <tr>
+                    <th>Nome da Turma</th>
+                    <th>ID do Professor</th>
+                    <th>Curso</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {turmas.map((turma) => (
+                    <tr key={turma.id}>
+                      <td 
+                          style={{textDecoration:"underline", cursor: "pointer"}}
+                          onClick={() => handleMateriaClick(turma.id)}
+                        >
+                        {turma.nome}
+                      </td>
+                      <td>{turma.professor}</td>
+                      <td>{turma.curso?.nome || "Não informado"}</td> 
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           ) : (
             <div className={styles['message-container']}>

@@ -90,7 +90,8 @@ class TurmaController{
     !! ATENCAO: Deve receber apenas uma lista com os ids dos alunos alunos:[1,2,3,4..]!! */
     static async editarAlunosTurma(turmaId, formData){
         try{
-            const response = await api.patch(`lms/turmas/${turmaId}/update_alunos_turma/`, formData,{
+            const response = await api.patch(`lms/turmas/${turmaId}/update_alunos_turma/`,{
+                alunos: formData,
                 headers: {
                     'Content-Type': 'application/json',
                 },

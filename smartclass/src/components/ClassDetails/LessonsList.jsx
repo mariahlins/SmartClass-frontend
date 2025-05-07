@@ -4,7 +4,7 @@ import AulaController from "../../../controllers/lms/aulaController";
 import { faEye, faPen, faTrash, faPaperclip } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const LessonsList = ({ turmaId }) => {
+const LessonsList = ({ turmaId, userType }) => {
   const [aulas, setAulas] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -243,18 +243,22 @@ const LessonsList = ({ turmaId }) => {
                       >
                         <FontAwesomeIcon icon={faEye} />
                       </button>
-                      <button 
-                        className={styles["view-details"]}
-                        onClick={() => abrirModalEditar(aula)}
-                      >
-                        <FontAwesomeIcon icon={faPen} />
-                      </button>
-                      <button 
-                        className={styles["view-details"]}
-                        onClick={() => abrirModalDeletar(aula.id)}
-                      >
-                        <FontAwesomeIcon icon={faTrash} />
-                      </button>
+                      {userType !== 1 && (
+                        <div style={{ display: "flex", gap: "0.5rem" }}>
+                          <button 
+                            className={styles["view-details"]}
+                            onClick={() => abrirModalEditar(aula)}
+                          >
+                            <FontAwesomeIcon icon={faPen} />
+                          </button>
+                          <button 
+                            className={styles["view-details"]}
+                            onClick={() => abrirModalDeletar(aula.id)}
+                          >
+                            <FontAwesomeIcon icon={faTrash} />
+                          </button>
+                        </div>
+                      )}
                     </div>
                   </td>
                 </tr>
@@ -263,17 +267,21 @@ const LessonsList = ({ turmaId }) => {
           </table>
           
           <div className={styles["add-lesson"]}>
+          {userType !== 1 && (
             <button className={styles["add-button"]} onClick={() => setShowModalCriar(true)}>
-              + Adicionar Nova Aula
+              + Adicionar Primeira Aula
             </button>
+          )}
           </div>
         </>
       ) : (
         <div className={styles["no-lessons"]}>
           <p>Nenhuma aula programada para esta turma.</p>
-          <button className={styles["add-button"]} onClick={() => setShowModalCriar(true)}>
-            + Adicionar Primeira Aula
-          </button>
+          {userType !== 1 && (
+            <button className={styles["add-button"]} onClick={() => setShowModalCriar(true)}>
+              + Adicionar Primeira Aula
+            </button>
+          )}
         </div>
       )}
 
