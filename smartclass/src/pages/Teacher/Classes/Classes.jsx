@@ -84,7 +84,7 @@ const ClassesTeacher = () => {
   };
 
   const handleMateriaClick = (turmaId) => {
-    navigate(`/classes/${turmaId}`, {state: {key: 2}});
+    navigate(`/classes/${turmaId}`, {state: 2});
   };
 
   const indexOfLastTurma = currentPage * turmasPerPage;

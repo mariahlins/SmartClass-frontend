@@ -163,7 +163,7 @@ const ClassesManager = () => {
   const totalPages = Math.ceil(turmas.length / turmasPerPage);
 
   const handleMateriaClick = (turmaId) => {
-    navigate(`/classes/${turmaId}`, {state: {key: 2}});
+    navigate(`/classes/${turmaId}`, {state: 3});
   };
 
   return (
