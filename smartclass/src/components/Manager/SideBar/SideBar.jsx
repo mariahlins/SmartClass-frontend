@@ -1,6 +1,6 @@
 import styles from './SideBar.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHome, faUserEdit, faAddressBook, faSignOut, faUser, faUsers, faBook } from '@fortawesome/free-solid-svg-icons'
+import { faHome, faUserEdit, faAddressBook, faSignOut, faUser, faUsers } from '@fortawesome/free-solid-svg-icons'
 import { Link, useLocation } from 'react-router-dom'
 
 const SideBar = () => {
@@ -9,7 +9,6 @@ const SideBar = () => {
         { name: 'Página Inicial', icon: faHome, path: '/home-manager'},
         { name: 'Editar perfil', icon: faUserEdit, path: '/profile-manager' },
         { name: 'Turmas', icon: faAddressBook, path: '/classes-manager' },
-        { name: 'Cursos', icon: faBook, path: '/courses-manager' },
         { name: 'Usuários', icon: faUsers, path: '/users' },
         { name: 'Logout', icon: faSignOut, path: '/' },
     ];

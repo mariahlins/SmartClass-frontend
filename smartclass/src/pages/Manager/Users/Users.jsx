@@ -3,12 +3,13 @@ import styles from "./Users.module.css";
 import Header from "../../../components/Header/Header";
 import SideBar from "../../../components/Manager/SideBar/SideBar";
 import UserController from "../../../../controllers/user/userController";
-import CursoController from "../../../../controllers/lms/cursoController";
+import CursoController from "../../../../controllers/lms/CursoController";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faPen, faTrash,faUserGraduate, faChalkboardTeacher, faUserTie } from '@fortawesome/free-solid-svg-icons';
 import NewManager from "../../../components/Manager/Modal/NewManager";
 import NewStudent from "../../../components/Manager/Modal/NewStudent";
 import NewTeacher from "../../../components/Manager/Modal/NewTeacher";
+
 
 const UsersManager = () => {
 	const [users, setUsers] = useState([]);
@@ -136,9 +137,18 @@ const UsersManager = () => {
 				<div className={styles["cls-header"]}>
 					<h1>Usuários</h1>
 					<div style={{ display: "flex", gap: "10px" }}>
-						<button onClick={() => toggleModal('manager')}>Add Manager</button>
-						<button onClick={() => toggleModal('student')}>Add Student</button>
-						<button onClick={() => toggleModal('teacher')}>Add Teacher</button>
+						<button onClick={() => toggleModal('student')}>
+							<FontAwesomeIcon icon={faUserGraduate} style={{ marginRight: '8px' }} />
+							Criar Estudante
+						</button>
+						<button onClick={() => toggleModal('teacher')}>
+							<FontAwesomeIcon icon={faChalkboardTeacher} style={{ marginRight: '8px' }} />
+							Criar Professor
+						</button>
+						<button onClick={() => toggleModal('manager')}>
+							<FontAwesomeIcon icon={faUserTie} style={{ marginRight: '8px' }} />
+							Criar Administrador
+						</button>
 					</div>
 				</div>
 				{loading ? (

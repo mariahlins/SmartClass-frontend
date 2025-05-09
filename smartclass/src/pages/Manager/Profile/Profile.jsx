@@ -180,6 +180,7 @@ const ProfileManager = () => {
                             value={formData.password}
                             onChange={handleChange}
                             disabled={!editMode}
+                            placeholder="Digite sua nova senha"
                             className={!editMode ? styles["disabled-input"] : ""}
                           />
                       </div>

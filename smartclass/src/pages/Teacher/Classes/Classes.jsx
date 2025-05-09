@@ -3,7 +3,7 @@ import styles from "./Classes.module.css";
 import Header from "../../../components/Header/Header";
 import SideBar from "../../../components/Teacher/SideBar/SideBar";
 import TurmaController from "../../../../controllers/lms/turmaController"; 
-import CursoController from "../../../../controllers/lms/cursoController"; 
+import CursoController from "../../../../controllers/lms/CursoController"; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen, faUserGroup } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from "react-router-dom";

@@ -14,6 +14,16 @@ const CreateUserModal = ({ isOpen, onClose, onUserCreated }) => {
     is_student: false
   });
 
+    const formatCPF = (value) => {
+        const cleanedValue = value.replace(/\D/g, '');
+
+        let formattedValue = cleanedValue.replace(/(\d{3})(\d)/, '$1.$2');
+        formattedValue = formattedValue.replace(/(\d{3})(\d)/, '$1.$2'); 
+        formattedValue = formattedValue.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+
+        return formattedValue;
+    };
+
   useEffect(() => {
     if (isOpen) {
       setFormData({
@@ -33,7 +43,7 @@ const CreateUserModal = ({ isOpen, onClose, onUserCreated }) => {
     const { name, value, type, checked } = e.target;
     setFormData({
       ...formData,
-      [name]: type === 'checkbox' ? checked : value,
+      [name]: name === 'cpf' ? formatCPF(value) : (type === 'checkbox' ? checked : value),
     });
   };
 
@@ -60,7 +70,7 @@ const CreateUserModal = ({ isOpen, onClose, onUserCreated }) => {
   return (
     <div className={styles.modalOverlay}>
       <div className={styles.modalContent}>
-        <h2>Criar novo usuário</h2>
+        <h2>Criar novo administrador</h2>
         <form onSubmit={handleSubmit}>
           <div className={styles.formGroup}>
             <label>Nome</label>
@@ -69,6 +79,7 @@ const CreateUserModal = ({ isOpen, onClose, onUserCreated }) => {
               name="name"
               value={formData.name}
               onChange={handleInputChange}
+              placeholder='Ex.: Paulo Silva Dos Santos'
               required
             />
           </div>
@@ -79,6 +90,7 @@ const CreateUserModal = ({ isOpen, onClose, onUserCreated }) => {
               type="email"
               name="email"
               value={formData.email}
+              placeholder='example@email.com'
               onChange={handleInputChange}
               required
             />
@@ -90,6 +102,7 @@ const CreateUserModal = ({ isOpen, onClose, onUserCreated }) => {
               type="text"
               name="cpf"
               value={formData.cpf}
+              placeholder='123.123.123-10'
               onChange={handleInputChange}
               required
             />
@@ -100,6 +113,7 @@ const CreateUserModal = ({ isOpen, onClose, onUserCreated }) => {
             <input
               type="password"
               name="password"
+              placeholder='Digite a senha'
               value={formData.password}
               onChange={handleInputChange}
               required

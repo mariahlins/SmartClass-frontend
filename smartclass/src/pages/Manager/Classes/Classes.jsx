@@ -4,7 +4,7 @@ import styles from "./Classes.module.css";
 import Header from "../../../components/Header/Header";
 import SideBar from "../../../components/Manager/SideBar/SideBar";
 import TurmaController from "../../../../controllers/lms/turmaController"; 
-import CursoController from "../../../../controllers/lms/cursoController"; 
+import CursoController from "../../../../controllers/lms/CursoController"; 
 import userController from "../../../../controllers/user/userController"; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
@@ -257,6 +257,7 @@ const ClassesManager = () => {
                   name="nome"
                   value={formData.nome}
                   onChange={handleInputChange}
+                  placeholder="Ex.: Matemática Discreta 24.1"
                   required
                 />
               </div>

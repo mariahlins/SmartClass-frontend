@@ -5,7 +5,6 @@ import {
   faUserEdit, 
   faSignOutAlt, 
   faUser, 
-  faChalkboardTeacher, 
   faBook, 
   faTasks 
 } from '@fortawesome/free-solid-svg-icons'
@@ -16,7 +15,6 @@ const SideBar = () => {
     const menuItems = [
         { name: 'Página Inicial', icon: faHome, path: '/home-teacher'},
         { name: 'Editar perfil', icon: faUserEdit, path: '/profile-teacher' },
-        { name: 'Turmas', icon: faChalkboardTeacher, path: '/classes-teacher' },
         { name: 'Cursos', icon: faBook, path: '/courses-teacher' },
         { name: 'Atividades', icon: faTasks, path: '/lesson-teacher' },
         { name: 'Logout', icon: faSignOutAlt, path: '/' },

@@ -9,13 +9,11 @@ import Register from './pages/Register/Register.jsx'
 import HomeStudent from './pages/Student/Home/Home.jsx'
 import ProfileStudent from './pages/Student/Profile/Profile.jsx'
 
-import HomeManager from './pages/Manager/Home/Home.jsx'
 import CoursesManager from './pages/Manager/Courses/Courses.jsx'
 import ClassesManager from './pages/Manager/Classes/Classes.jsx'
 import ProfileManager from './pages/Manager/Profile/Profile.jsx'
 import UsersManager from './pages/Manager/Users/Users.jsx'
 
-import HomeTeacher from './pages/Teacher/Home/Home.jsx'
 import CoursesTeacher from './pages/Teacher/Courses/Courses.jsx'
 import ClassesTeacher from './pages/Teacher/Classes/Classes.jsx'
 import ProfileTeacher from './pages/Teacher/Profile/Profile.jsx'
@@ -29,15 +27,13 @@ const router = createBrowserRouter([
   { path: "/home", element: <HomeStudent /> },
   { path: "/profile", element: <ProfileStudent /> },
 
-  { path: "/home-manager", element: <HomeManager /> },
+  { path: "/home-manager", element: <CoursesManager /> },
   { path: "/profile-manager", element: <ProfileManager /> },
-  { path: "/courses-manager", element: <CoursesManager /> },
   { path: "/classes-manager", element: <ClassesManager /> },
   { path: "/users", element: <UsersManager /> },
 
-  { path: "/home-teacher", element: <HomeTeacher /> },
+  { path: "/home-teacher", element: <ClassesTeacher /> },
   { path: "/courses-teacher", element: <CoursesTeacher /> },
-  { path: "/classes-teacher", element: <ClassesTeacher /> },
   { path: "/profile-teacher", element: <ProfileTeacher /> },
 
   { path: "/classes/:id", element: <ClassDetails /> },

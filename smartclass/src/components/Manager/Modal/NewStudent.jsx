@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import styles from './Modal.module.css'; 
 import AuthController from '../../../../controllers/authController';
-import CursoController from '../../../../controllers/lms/cursoController';
+import CursoController from '../../../../controllers/lms/CursoController';
 
 const NewStudent = ({ isOpen, onClose, onUserCreated }) => {
   const [cursos, setCursos] = useState([]);
@@ -16,6 +16,16 @@ const NewStudent = ({ isOpen, onClose, onUserCreated }) => {
     is_teacher: false,
     is_student: true
   });
+
+    const formatCPF = (value) => {
+        const cleanedValue = value.replace(/\D/g, '');
+
+        let formattedValue = cleanedValue.replace(/(\d{3})(\d)/, '$1.$2');
+        formattedValue = formattedValue.replace(/(\d{3})(\d)/, '$1.$2'); 
+        formattedValue = formattedValue.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+
+        return formattedValue;
+    };
 
   useEffect(() => {
     async function carregarCursos() {
@@ -51,7 +61,7 @@ const NewStudent = ({ isOpen, onClose, onUserCreated }) => {
     const { name, value, type, checked } = e.target;
     setFormData({
       ...formData,
-      [name]: type === 'checkbox' ? checked : value,
+      [name]: name === 'cpf' ? formatCPF(value) : (type === 'checkbox' ? checked : value),
     });
   };
 
@@ -78,7 +88,7 @@ const NewStudent = ({ isOpen, onClose, onUserCreated }) => {
   return (
     <div className={styles.modalOverlay}>
       <div className={styles.modalContent}>
-        <h2>Criar novo usuário</h2>
+        <h2>Criar novo estudante</h2>
         <form onSubmit={handleSubmit}>
           <div className={styles.formGroup}>
             <label>Nome</label>
@@ -87,6 +97,7 @@ const NewStudent = ({ isOpen, onClose, onUserCreated }) => {
               name="name"
               value={formData.name}
               onChange={handleInputChange}
+              placeholder='Ex.: Paulos Silva Dos Santos'
               required
             />
           </div>
@@ -98,6 +109,7 @@ const NewStudent = ({ isOpen, onClose, onUserCreated }) => {
               name="email"
               value={formData.email}
               onChange={handleInputChange}
+              placeholder='example@email.com'
               required
             />
           </div>
@@ -108,6 +120,7 @@ const NewStudent = ({ isOpen, onClose, onUserCreated }) => {
               type="text"
               name="cpf"
               value={formData.cpf}
+              placeholder='123.123.123-10'
               onChange={handleInputChange}
               required
             />
@@ -118,6 +131,7 @@ const NewStudent = ({ isOpen, onClose, onUserCreated }) => {
             <input
               type="password"
               name="password"
+              placeholder='Digite a nova senha'
               value={formData.password}
               onChange={handleInputChange}
               required

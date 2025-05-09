@@ -147,18 +147,22 @@ const ClassDetails = () => {
                 >
                   Atividades
                 </button>
-                <button 
-                  className={`${styles["tab-button"]} ${activeTab === "pendentes" ? styles["active"] : ""}`}
-                  onClick={() => handleTabChange("pendentes")}
-                >
-                  Pendentes
-                </button>
-                <button 
-                  className={`${styles["tab-button"]} ${activeTab === "notas" ? styles["active"] : ""}`}
-                  onClick={() => handleTabChange("notas")}
-                >
-                  Notas
-                </button>
+                {userType !== 3 && (
+                  <>
+                    <button 
+                      className={`${styles["tab-button"]} ${activeTab === "pendentes" ? styles["active"] : ""}`}
+                      onClick={() => handleTabChange("pendentes")}
+                    >
+                      Pendentes
+                    </button>
+                    <button 
+                      className={`${styles["tab-button"]} ${activeTab === "notas" ? styles["active"] : ""}`}
+                      onClick={() => handleTabChange("notas")}
+                    >
+                      Notas
+                    </button>
+                  </>
+                )}
               </div>
               
               <div className={styles["tab-content"]}>
