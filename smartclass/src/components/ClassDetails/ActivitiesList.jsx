@@ -2,8 +2,10 @@ import { useState, useEffect } from "react";
 import styles from "./ClassDetails.module.css";
 import AulaController from "../../../controllers/lms/aulaController";
 import AtividadeController from "../../../controllers/lms/atividadeController";
-import { faEye, faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
+import AvaliacaoController from "../../../controllers/avaliacao/avaliacaoController";
+import { faEye, faPaperclip, faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import AvaliacaoButton from "../Student/Avaliacao/Avaliacao";
 
 const ActivitiesList = ({ turmaId, userType }) => {
   const [atividades, setAtividades] = useState([]);
@@ -26,12 +28,16 @@ const ActivitiesList = ({ turmaId, userType }) => {
     titulo: "",
     descricao: "",
     data_entrega: "",
-    aula: ""
+    aula: "",
+    conteudo: null
   });
+
   const [arquivo, setArquivo] = useState(null);
   const [arquivoAtual, setArquivoAtual] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [formError, setFormError] = useState(null);
+  
+  const alunoId = localStorage.getItem("userId");
 
   useEffect(() => {
     async function carregarDados() {
@@ -67,6 +73,41 @@ const ActivitiesList = ({ turmaId, userType }) => {
     }
   }, [turmaId]);
 
+
+  const [atividadesAvaliacoes, setAtividadesAvaliacoes] = useState({});
+
+  const verificarSeAtividadeFoiAvaliada = async (atividade) => {
+    try {
+      const response = await AvaliacaoController.obterAtividadeAvaliacao(atividade.id);
+      const avaliacoes = Array.isArray(response) ? response : (response?.data ?? []);
+      
+      const alunoIdNumero = Number(alunoId);
+      
+      const jaAvaliou = avaliacoes.some(avaliacao => avaliacao.aluno === alunoIdNumero);
+  
+      setAtividadesAvaliacoes(prev => ({
+        ...prev,
+        [atividade.id]: jaAvaliou
+      }));
+    } catch (err) {
+      console.error(`Erro ao verificar status da atividade ${atividade.id}:`, err);
+      setAtividadesAvaliacoes(prev => ({
+        ...prev,
+        [atividade.id]: false
+      }));
+    }
+  };
+  
+
+  useEffect(() => {
+    if (userType === 1 && atividades.length > 0 && alunoId) {
+      atividades.forEach(atividade => {
+        verificarSeAtividadeFoiAvaliada(atividade);
+      });
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [atividades, alunoId, userType]);
+  
   const formatarDataParaInput = (dataString) => {
     const data = new Date(dataString);
     return data.toISOString().split('T')[0];
@@ -77,7 +118,7 @@ const ActivitiesList = ({ turmaId, userType }) => {
       titulo: "",
       descricao: "",
       data_entrega: "",
-      aula: aulaIdSelecionada || ""
+      aula: aulaIdSelecionada || "",
     });
     setArquivo(null);
     setArquivoAtual("");
@@ -170,7 +211,7 @@ const ActivitiesList = ({ turmaId, userType }) => {
       submitData.append("descricao", formData.descricao);
       submitData.append("data_entrega", formData.data_entrega);
       submitData.append("aula", formData.aula);
-      submitData.append("conteudo", arquivo);
+      submitData.append("conteudo", formData.conteudo || arquivo);
 
       const novaAtividade = await AtividadeController.criarAtividade(submitData);
       
@@ -254,7 +295,7 @@ const ActivitiesList = ({ turmaId, userType }) => {
           
           {formError && <p className={styles.errorMessage}>{formError}</p>}
           
-          <form onSubmit={handleSubmitAdicionar} className={styles.form}>
+          <form onSubmit={handleSubmitAdicionar} className={styles.form} style={{padding: "1.4rem"}}>
             <div className={styles.formGroup}>
               <label htmlFor="titulo" className={styles.label}>
                 Título*
@@ -321,8 +362,14 @@ const ActivitiesList = ({ turmaId, userType }) => {
             </div>
             
             <div className={styles.formGroup}>
-              <label htmlFor="conteudo" className={styles.label}>
-                Arquivo da Atividade*
+            <label htmlFor="conteudo">Conteúdo da atividade:</label>
+              <label htmlFor="conteudo" className={styles["file-label"]}>
+                  {formData.conteudo ? formData.conteudo.name : 
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                    <FontAwesomeIcon icon={faPaperclip} className={styles["icon"]} />
+                     Selecionar arquivo
+                  </div>
+                  }
               </label>
               <input
                 type="file"
@@ -557,13 +604,15 @@ const ActivitiesList = ({ turmaId, userType }) => {
                     Aula: {atividade.aulaNome}
                   </span>
                   <span className={styles.activityDueDate}>
-                    Prazo: {formatarData(atividade.data_entrega)}
+                    Prazo: <span style={{color:"#ff7878"}}>
+                     {formatarData(atividade.data_entrega)}
+                    </span>
                   </span>
                 </div>
                 
                 {atividade.descricao && (
                   <div className={styles.activityDescription}>
-                    {atividade.descricao}
+                  <strong>Descrição: </strong>  {atividade.descricao}
                   </div>
                 )}
 
@@ -590,12 +639,21 @@ const ActivitiesList = ({ turmaId, userType }) => {
                   </div>
                 )}
                 {userType===1 && (
-                  <button 
-                      className={styles["view-details"]}
-                      onClick={() => handleVerDetalhesAluno(atividade)}
-                    >
-                      <FontAwesomeIcon icon={faEye} />
-                  </button>
+                  <div style={{display:"flex", gap:"1rem"}}>
+                    <button 
+                        className={styles["view-details"]}
+                        onClick={() => handleVerDetalhesAluno(atividade)}
+                      >
+                        <FontAwesomeIcon icon={faEye} />
+                    </button>
+                    {userType === 1 && !atividadesAvaliacoes[atividade.id] && (
+                      <AvaliacaoButton
+                        activity={atividade}
+                        buttonText="Enviar Trabalho"
+                        buttonClassName="submitButton"
+                      />
+                    )}
+                   </div>
                 )}
               </li>
             ))}

@@ -10,6 +10,10 @@ import SideBarMn from "../../components/Manager/SideBar/SideBar";
 import StudentsList from "./StudentsList";
 import LessonsList from "./LessonsList";
 import ActivitiesList from "./ActivitiesList";
+import PendingStudent from "../Activity/PendingStudent";
+import ScoreStudent from "../Activity/ScoreStudent";
+import PendingTeacher from "../Activity/PendingTeacher";
+import Score from "../Activity/Score";
 
 const ClassDetails = () => {
   const { id } = useParams();
@@ -23,6 +27,8 @@ const ClassDetails = () => {
   const [professorInfo, setProfessorInfo] = useState(null);
   const [loadingProfessor, setLoadingProfessor] = useState(false);
   const [activeTab, setActiveTab] = useState("alunos");
+
+  const userId = localStorage.getItem("userId");
 
   useEffect(() => {
     async function carregarTurma() {
@@ -141,12 +147,30 @@ const ClassDetails = () => {
                 >
                   Atividades
                 </button>
+                <button 
+                  className={`${styles["tab-button"]} ${activeTab === "pendentes" ? styles["active"] : ""}`}
+                  onClick={() => handleTabChange("pendentes")}
+                >
+                  Pendentes
+                </button>
+                <button 
+                  className={`${styles["tab-button"]} ${activeTab === "notas" ? styles["active"] : ""}`}
+                  onClick={() => handleTabChange("notas")}
+                >
+                  Notas
+                </button>
               </div>
               
               <div className={styles["tab-content"]}>
                 {activeTab === "alunos" && <StudentsList turmaId={turma.id} alunosIds={turma.alunos || []} userType={userType} />}
                 {activeTab === "aulas" && <LessonsList turmaId={turma.id} userType={userType} />}
                 {activeTab === "atividades" && <ActivitiesList turmaId={turma.id} userType={userType} />}
+
+                {userType === 1 && activeTab === "pendentes" && <PendingStudent turmaId={turma.id} userId={userId} />}
+                {userType === 1 && activeTab === "notas" && <ScoreStudent turmaId={turma.id} userType={userType}  userId={userId}/>}
+
+                {userType === 2 && activeTab === "pendentes" && <PendingTeacher turmaId={turma.id} userType={userType} />}
+                {userType === 2 && activeTab === "notas" && <Score turmaId={turma.id} userType={userType} />}
               </div>
             </div>
           </>

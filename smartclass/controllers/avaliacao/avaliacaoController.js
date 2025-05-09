@@ -2,19 +2,25 @@ import api from '../../services/api';
 
 class AvaliacaoController{
     // Metodo para o aluno enviar a atividade para a avaliacao do professor
-    static async enviarAtividade(formData){
-        try{
-            const response = await api.post('avaliacao/avaliacao_atividade/', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            });
-            return response.data;
-        }catch(error){
-            console.error('Erro ao enviar atividade:', error.response ? error.response.data : error.message);
-            throw error;
+    static async enviarAtividade(atividade, aluno, arquivo) {
+        try {
+          const formData = new FormData();
+          
+          formData.append('atividade', atividade);
+          formData.append('aluno', aluno);
+          formData.append('conteudo_para_avaliacao', arquivo);
+          
+          const response = await api.post('avaliacao/avaliacao_atividade/', formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          });
+          return response.data;
+        } catch (error) {
+          console.error('Erro ao enviar atividade:', error.response ? error.response.data : error.message);
+          throw error;
         }
-    }
+      }
 
     // Metodo para o aluno atualizar a atividade enviada para a avaliacao do professor
     static async atualizarAtividadeEnviada(atividadeId, formData){
@@ -71,7 +77,8 @@ class AvaliacaoController{
     // Metodo para obtener os dados de uma atividade enviada para avaliacao pelo aluno
     static async obterAtividadeAvaliacao(atividadeId){
         try{
-            const response = await api.get(`avaliacao/avaliacao_atividade/${atividadeId}/`);
+            const response = await api.get(`avaliacao/avaliacao_atividade/${atividadeId}/get_atividades_by_id/`);
+            console.log("RESPONSEEEEEEEE ",atividadeId,response)
             return response.data;
         }catch(error){
             console.error('Erro ao obter atividade para avaliacao:', error.response ? error.response.data : error.message);

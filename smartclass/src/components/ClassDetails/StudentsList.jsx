@@ -241,18 +241,18 @@ const StudentsList = ({ turmaId, alunosIds, userType }) => {
                   
                   <div className={styles["form-actions"]}>
                     <button
-                      className={styles["submit-button"]}
-                      onClick={salvarAlunosTurma}
-                      disabled={atualizandoTurma}
-                    >
-                      {atualizandoTurma ? "Salvando..." : "Salvar Alterações"}
-                    </button>
-                    <button
                       className={styles["cancel-button"]}
                       onClick={() => setShowEditModal(false)}
                       disabled={atualizandoTurma}
                     >
                       Cancelar
+                    </button>
+                    <button
+                      className={styles["submit-button"]}
+                      onClick={salvarAlunosTurma}
+                      disabled={atualizandoTurma}
+                    >
+                      {atualizandoTurma ? "Salvando..." : "Salvar Alterações"}
                     </button>
                   </div>
                 </>
