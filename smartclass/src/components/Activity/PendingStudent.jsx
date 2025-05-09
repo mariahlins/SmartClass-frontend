@@ -13,32 +13,68 @@ const PendingStudent = ({ turmaId }) => {
   const [currentActivity, setCurrentActivity] = useState(null);
   const [submitSuccess, setSubmitSuccess] = useState(false);
 
-    const alunoId = localStorage.getItem("userId");
+  const alunoId = localStorage.getItem("userId");
  
-    useEffect(() => {
-        const fetchPendingActivities = async () => {
-          console.log(alunoId);
-          try {
-            setLoading(true);
-            
-            const todasAtividades = await AvaliacaoController.listarAtividadesAvaliacao();
-            console.log("AAAAAAAAAAAAAAAAAAAAAAAA",todasAtividades);
-
-            setPendingActivities(todasAtividades);
-            setLoading(false);
-            
-          } catch (err) {
-            console.error("Erro ao carregar atividades pendentes:", err);
-            setError("Não foi possível carregar as atividades pendentes. Por favor, tente novamente mais tarde.");
-            setLoading(false);
-          }
-          
-        };
+  useEffect(() => {
+    const fetchPendingActivities = async () => {
+      console.log("alunoId:", alunoId, "tipo:", typeof alunoId);
       
-        if (alunoId) {
-          fetchPendingActivities();
+      try {
+        setLoading(true);
+        
+        const todasAtividades = await AvaliacaoController.listarAtividadesAvaliacao();
+
+        if (todasAtividades.length > 0) {
+          console.log("Exemplo de aluno ID na lista:", todasAtividades[0].aluno, "tipo:", typeof todasAtividades[0].aluno);
         }
-      }, [turmaId, alunoId]);
+
+        const alunoIdNumerico = Number(alunoId);
+        let atividades = todasAtividades.filter(atividade => atividade.aluno === alunoIdNumerico && atividade.nota == null);
+
+        if (atividades.length === 0) {
+          console.log("Tentando filtrar sem conversão...");
+          atividades = todasAtividades.filter(atividade => String(atividade.aluno) === String(alunoId) && atividade.nota == null);
+          console.log("Resultado sem conversão:", atividades);
+        }
+
+        const atividadesCompletas = await Promise.all(
+          atividades.map(async (atividade) => {
+            try {
+              const detalhesAtividade = await AtividadeController.obterAtividade(atividade.atividade);
+              return {
+                ...atividade,
+                ...detalhesAtividade,  
+                titulo: detalhesAtividade.titulo || "Título não disponível",
+                descricao: detalhesAtividade.descricao,
+                data_entrega: detalhesAtividade.data_entrega
+              };
+            } catch (err) {
+              console.error(`Erro ao buscar detalhes da atividade ${atividade.id}:`, err);
+              return {
+                ...atividade,
+                titulo: "Título não disponível",
+                descricao: "Descrição não disponível",
+                data_entrega: null
+              };
+            }
+          })
+        );
+
+        console.log("Atividades com detalhes:", atividadesCompletas);
+        setPendingActivities(atividadesCompletas);
+        setLoading(false);
+        
+      } catch (err) {
+        console.error("Erro ao carregar atividades pendentes:", err);
+        setError("Não foi possível carregar as atividades pendentes. Por favor, tente novamente mais tarde.");
+        setLoading(false);
+      }
+    };
+
+    if (alunoId) {
+      fetchPendingActivities();
+    }
+  }, [turmaId, alunoId]);
 
   const handleFileChange = (e) => {
     setSelectedFile(e.target.files[0]);
@@ -89,6 +125,16 @@ const PendingStudent = ({ turmaId }) => {
     }
   };
 
+  const formatarData = (dataString) => {
+    if (!dataString) return "Data não disponível";
+    try {
+      return new Date(dataString).toLocaleDateString('pt-BR');
+    // eslint-disable-next-line no-unused-vars
+    } catch (e) {
+      return "Data inválida";
+    }
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.pendingActivitiesContainer}>
@@ -128,14 +174,20 @@ const PendingStudent = ({ turmaId }) => {
                 <div>
                   <div className={styles.activityHeaderInfo}>
                     <span className={`${styles.activityStatus} ${styles.pendente}`}>
-                      Pendente
+                      Atividade não avaliada
                     </span>
                   </div>
                   
-                  <h4 className={styles.activityTitle}>{activity.titulo || "Título não disponível"}</h4>
+                  <h4 className={styles.activityTitle}>{activity.titulo}</h4>
+                  
+                  {activity.descricao && (
+                    <p className={styles.activityDescription}>
+                      {activity.descricao}
+                    </p>
+                  )}
                   
                   <div className={styles.activityMetadata}>
-                    <span>Data limite: {new Date(activity.data_entrega).toLocaleDateString('pt-BR')}</span>
+                    <span>Data limite: {formatarData(activity.data_entrega)}</span>
                   </div>
                   
                 </div>
@@ -148,7 +200,7 @@ const PendingStudent = ({ turmaId }) => {
                       Enviar Conteúdo
                     </button>
                   </div>
-              )}
+                )}
                 </li>
               ))}
             </ul>
@@ -174,6 +226,18 @@ const PendingStudent = ({ turmaId }) => {
                   <div className={styles.formGroup}>
                     <label className={styles.label}>Atividade:</label>
                     <p>{currentActivity?.titulo}</p>
+                  </div>
+                  
+                  {currentActivity?.descricao && (
+                    <div className={styles.formGroup}>
+                      <label className={styles.label}>Descrição:</label>
+                      <p>{currentActivity.descricao}</p>
+                    </div>
+                  )}
+                  
+                  <div className={styles.formGroup}>
+                    <label className={styles.label}>Data limite:</label>
+                    <p>{currentActivity?.data_entrega ? formatarData(currentActivity.data_entrega) : "Não especificada"}</p>
                   </div>
                   
                   <div className={styles.formGroup}>

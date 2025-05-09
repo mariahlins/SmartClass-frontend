@@ -1,9 +1,15 @@
 import { useState, useEffect } from "react";
 import styles from "./Activity.module.css";
 import AvaliacaoController from "../../../controllers/avaliacao/avaliacaoController";
+import UserController from "../../../controllers/user/userController"
+import AtividadeController from "../../../controllers/lms/atividadeController";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 const PendingTeacher = ({ turmaId }) => {
   const [pendingActivities, setPendingActivities] = useState([]);
+  const [filteredActivities, setFilteredActivities] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showModal, setShowModal] = useState(false);
@@ -20,7 +26,25 @@ const PendingTeacher = ({ turmaId }) => {
         setLoading(true);
         const todasAtividades = await AvaliacaoController.listarAtividadesAvaliacao();
         const atividadesPendentes = todasAtividades.filter(atividade => atividade.nota === null);
-        setPendingActivities(atividadesPendentes);
+        
+        const atividadesComDetalhes = await Promise.all(
+          atividadesPendentes.map(async (atividade) => {
+            // Buscar informações do aluno pelo ID
+            const alunoInfo = await UserController.obterUsuario(atividade.aluno);
+            
+            // Buscar informações da atividade pelo ID
+            const atividadeInfo = await AtividadeController.obterAtividade(atividade.atividade);
+            
+            return {
+              ...atividade,
+              aluno: alunoInfo?.name || "Nome não disponível",
+              atividade: atividadeInfo?.titulo || "Título não disponível"
+            };
+          })
+        );
+        
+        setPendingActivities(atividadesComDetalhes);
+        setFilteredActivities(atividadesComDetalhes);
         setLoading(false);
       } catch (err) {
         console.error("Erro ao carregar atividades pendentes:", err);
@@ -52,8 +76,22 @@ const PendingTeacher = ({ turmaId }) => {
     const notaValue = e.target.value;
     setNota(notaValue);
     
-    // Se a nota for menor ou igual a 5, feedback é obrigatório
     setFeedbackRequired(parseFloat(notaValue) <= 5);
+  };
+  
+  const handleSearch = (e) => {
+    const searchValue = e.target.value.toLowerCase();
+    setSearchTerm(searchValue);
+    
+    if (searchValue.trim() === "") {
+      setFilteredActivities(pendingActivities);
+    } else {
+      const filtered = pendingActivities.filter(activity => 
+        activity.aluno.toLowerCase().includes(searchValue) || 
+        activity.atividade.toLowerCase().includes(searchValue)
+      );
+      setFilteredActivities(filtered);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -103,6 +141,21 @@ const PendingTeacher = ({ turmaId }) => {
       <div className={styles.pendingActivitiesContainer}>
         <h2 className={styles.sectionTitle}>Atividades Pendentes de Avaliação</h2>
         
+        <div className={styles.searchContainer}>
+          <div className={styles.searchInputWrapper}>
+            <span className={styles.searchIcon}>
+              <FontAwesomeIcon icon={faMagnifyingGlass} />
+            </span>
+            <input
+              type="text"
+              className={styles.searchInput}
+              placeholder="Buscar por aluno ou atividade..."
+              value={searchTerm}
+              onChange={handleSearch}
+            />
+          </div>
+        </div>
+        
         {loading && (
           <div className={styles.loadingMessage}>
             <p>Carregando atividades pendentes...</p>
@@ -123,16 +176,29 @@ const PendingTeacher = ({ turmaId }) => {
           </div>
         )}
         
-        {!loading && !error && pendingActivities.length > 0 && (
+        {!loading && !error && pendingActivities.length > 0 && filteredActivities.length === 0 && (
+          <div className={styles.emptyState}>
+            <p className={styles.emptyMessage}>
+              Nenhuma atividade encontrada para "{searchTerm}".
+            </p>
+          </div>
+        )}
+        
+        {!loading && !error && filteredActivities.length > 0 && (
           <>
             <div className={styles.activityHeader}>
               <span className={styles.totalCount}>
-                {pendingActivities.length} {pendingActivities.length === 1 ? 'atividade pendente' : 'atividades pendentes'} de avaliação
+                {filteredActivities.length} {filteredActivities.length === 1 ? 'atividade pendente' : 'atividades pendentes'} de avaliação
+                {searchTerm && (
+                  <span className={styles.searchResults}>
+                    {" "}(filtrado de {pendingActivities.length} total)
+                  </span>
+                )}
               </span>
             </div>
             
             <ul className={styles.activitiesList}>
-              {pendingActivities.map((activity) => (
+              {filteredActivities.map((activity) => (
                 <li key={activity.id} className={styles.activityCard}>
                   <div className={styles.activityContent}>
                     <div className={styles.activityHeaderInfo}>
@@ -141,8 +207,8 @@ const PendingTeacher = ({ turmaId }) => {
                       </span>
                     </div>
                     
-                    <h4 className={styles.activityTitle}>{activity.atividade || "Título não disponível"}</h4>
-                    <h5 className={styles.activitySubtitle}>Aluno: {activity.aluno || "Aluno não disponível"}</h5>
+                    <h4 className={styles.activityTitle}>{activity.atividade}</h4>
+                    <h5 className={styles.activitySubtitle}>Aluno: {activity.aluno}</h5>
                     
                     {activity.conteudo_para_avaliacao ? (
                       <div className={styles.conteudoInfo}>
