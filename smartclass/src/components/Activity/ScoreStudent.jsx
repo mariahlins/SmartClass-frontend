@@ -2,34 +2,27 @@ import { useState, useEffect } from "react";
 import styles from "./Activity.module.css";
 import AvaliacaoController from "../../../controllers/avaliacao/avaliacaoController";
 import AtividadeController from "../../../controllers/lms/atividadeController";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye } from '@fortawesome/free-solid-svg-icons';
 
 const ScoreStudent = ({ turmaId }) => {
   const [pendingActivities, setPendingActivities] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [modalData, setModalData] = useState(null);
 
   const alunoId = localStorage.getItem("userId");
- 
+
   useEffect(() => {
     const fetchPendingActivities = async () => {
-      
       try {
         setLoading(true);
-        
         const todasAtividades = await AvaliacaoController.listarAtividadesAvaliacao();
-
-        if (todasAtividades.length > 0) {
-          console.log("Exemplo de aluno ID na lista:", todasAtividades[0].aluno, "tipo:", typeof todasAtividades[0].aluno);
-        }
 
         const alunoIdNumerico = Number(alunoId);
         let atividades = todasAtividades.filter(atividade => atividade.aluno === alunoIdNumerico && atividade.nota !== null);
-        console.log("Notas", atividades)
-
         if (atividades.length === 0) {
-          console.log("Tentando filtrar sem conversão...");
           atividades = todasAtividades.filter(atividade => String(atividade.aluno) === String(alunoId) && atividade.nota !== null);
-          console.log("Resultado sem conversão:", atividades);
         }
 
         const atividadesCompletas = await Promise.all(
@@ -38,7 +31,7 @@ const ScoreStudent = ({ turmaId }) => {
               const detalhesAtividade = await AtividadeController.obterAtividade(atividade.atividade);
               return {
                 ...atividade,
-                ...detalhesAtividade,  
+                ...detalhesAtividade,
                 titulo: detalhesAtividade.titulo || "Título não disponível",
                 descricao: detalhesAtividade.descricao,
                 data_entrega: detalhesAtividade.data_entrega
@@ -55,10 +48,9 @@ const ScoreStudent = ({ turmaId }) => {
           })
         );
 
-        console.log("Atividades com detalhes:", atividadesCompletas);
         setPendingActivities(atividadesCompletas);
         setLoading(false);
-        
+
       } catch (err) {
         console.error("Erro ao carregar atividades pendentes:", err);
         setError("Não foi possível carregar as atividades pendentes. Por favor, tente novamente mais tarde.");
@@ -75,48 +67,54 @@ const ScoreStudent = ({ turmaId }) => {
     <div className={styles.container}>
       <div className={styles.pendingActivitiesContainer}>
         <h2 className={styles.sectionTitle}>Atividades avaliadas</h2>
-        
-        {loading && (
-          <div className={styles.loadingMessage}>
-            <p>Carregando atividades...</p>
-          </div>
-        )}
-        
-        {error && (
-          <div className={styles.errorMessage}>
-            <p>{error}</p>
-          </div>
-        )}
-        
+
+        {loading && <p className={styles.loadingMessage}>Carregando atividades...</p>}
+        {error && <p className={styles.errorMessage}>{error}</p>}
         {!loading && !error && pendingActivities.length === 0 && (
-          <div className={styles.emptyState}>
-            <p className={styles.emptyMessage}>
-              Você não tem atividades avaliadas no momento.
-            </p>
-          </div>
+          <p className={styles.emptyMessage}>Você não tem atividades avaliadas no momento.</p>
         )}
-        
+
         {!loading && !error && pendingActivities.length > 0 && (
           <>
             <div className={styles.activityHeader}>
               <span className={styles.totalCount}>
-                {pendingActivities.length} {pendingActivities.length === 1 ? 'atividade pendente' : 'atividades pendentes'}
+                {pendingActivities.length} {pendingActivities.length === 1 ? 'atividade avaliada' : 'atividades avaliadas'}
               </span>
             </div>
-            
-            <ul className={styles.activitiesList} style={{display: "flex", justifyContent: "space-between", width: "100%", flexDirection: "column", height:"4rem"}}>
+
+            <ul className={styles.activitiesList}>
               {pendingActivities.map((activity) => (
-                <li key={activity.id} className={styles.activityCard}>
-                <div style={{display:"flex", justifyContent:"space-between", width:"95%"}}>
-                  
-                  <h4 className={styles.activityTitle}>{activity.titulo}</h4>
-                  <h4 className={styles.activityTitle}>{activity.nota}</h4>
-                  
-                </div>
+                <li key={activity.id} className={styles.activityCard} style={{height:"4rem"}}>
+                  <div className={styles.activityRow} style={{width:"100%"}}>
+                  <div style={{display:"flex", justifyContent:"space-between"}}>
+                    <h4 className={styles.activityTitle}>{activity.titulo}</h4>
+                    <h4 className={styles.activityNota}>Nota: {activity.nota}</h4>
+                  </div>
+                    {activity.feedback && (
+                      <button
+                        className={styles.feedbackButton}
+                        onClick={() => setModalData({ feedback: activity.feedback, nota: activity.nota, titulo: activity.titulo })}
+                      >
+                        <FontAwesomeIcon icon={faEye} /> Ver feedback
+                      </button>
+                    )}
+                  </div>
                 </li>
               ))}
             </ul>
           </>
+        )}
+
+        {modalData && (
+          <div className={styles.modalOverlay} onClick={() => setModalData(null)}>
+            <div className={styles.modalContent} onClick={e => e.stopPropagation()}>
+              <h3 className={styles.modalTitle}>{modalData.titulo}</h3>
+              <p><strong>Nota:</strong> {modalData.nota}</p>
+              <p><strong>Feedback:</strong></p>
+              <p>{modalData.feedback}</p>
+              <button className={styles.closeModalBtn} onClick={() => setModalData(null)}>Fechar</button>
+            </div>
+          </div>
         )}
       </div>
     </div>

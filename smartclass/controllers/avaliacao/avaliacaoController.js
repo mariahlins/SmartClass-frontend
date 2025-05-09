@@ -51,11 +51,12 @@ class AvaliacaoController{
     /* Verificar a lógica da publicação de notas na documentacao de endpoints pag 7 */
     static async publicarNotas(atividadeId, formData){
         try{
-            const response = await api.patch(`avaliacao/avaliacao_atividade/${atividadeId}/`, formData, {
+            const response = await api.patch(`avaliacao/avaliacao_atividade/${atividadeId}/publicar_nota/`, formData, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
             });
+            console.log("AAAAAAAAAAAAAA",response)
             return response.data;
         }catch(error){  
             console.error('Erro ao publicar notas:', error.response ? error.response.data : error.message);
@@ -67,6 +68,7 @@ class AvaliacaoController{
     static async listarAtividadesAvaliacao(){
         try{
             const response = await api.get('avaliacao/avaliacao_atividade/');
+            console.log("LISTAR AVALIAÇÕES: ",response)
             return response.data;
         }catch(error){
             console.error('Erro ao listar atividades para avaliacao:', error.response ? error.response.data : error.message);

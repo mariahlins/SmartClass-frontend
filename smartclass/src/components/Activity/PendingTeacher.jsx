@@ -112,6 +112,8 @@ const PendingTeacher = ({ turmaId }) => {
       }
       
       await AvaliacaoController.publicarNotas(currentActivity.id, formData);
+      console.log("ID sendo enviado para atualização:", currentActivity.id);
+      console.log("Objeto de atividade completo:", currentActivity);
       
       setPendingActivities(prev => 
         prev.filter(activity => activity.id !== currentActivity.id)
