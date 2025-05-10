@@ -95,15 +95,6 @@ const Score = ({ turmaId, isTeacher = true }) => {
     }
   };
 
-  const openEditModal = (activity) => {
-    setCurrentActivity(activity);
-    setNota(activity.nota.toString());
-    setFeedback(activity.feedback || "");
-    setShowModal(true);
-    setFeedbackRequired(parseFloat(activity.nota) <= 5);
-    setSuccessMessage("");
-  };
-
   const closeModal = () => {
     setShowModal(false);
     setCurrentActivity(null);
@@ -266,17 +257,6 @@ const Score = ({ turmaId, isTeacher = true }) => {
                       </div>
                     )}
                   </div>
-                  
-                  {isTeacher && (
-                    <div className={styles.activityActions}>
-                      <button 
-                        className={styles.submitButton}
-                        onClick={() => openEditModal(activity)}
-                      >
-                        Editar Avaliação
-                      </button>
-                    </div>
-                  )}
                 </li>
               ))}
             </ul>

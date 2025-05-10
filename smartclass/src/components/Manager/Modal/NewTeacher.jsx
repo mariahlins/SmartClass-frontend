@@ -81,6 +81,7 @@ const NewTeacher = ({ isOpen, onClose, onUserCreated }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      formData.cpf = formData.cpf.replace(/\D/g, ''),
       formData.role = "teacher";
       console.log("Dados do formulário:", formData);
       const response = await AuthController.register(formData);

@@ -50,8 +50,8 @@ const CreateUserModal = ({ isOpen, onClose, onUserCreated }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      formData.role = formData.is_manager ? "manager" : formData.is_teacher ? "teacher" : "student";
-      
+      formData.role = "manager";
+      formData.cpf = formData.cpf.replace(/\D/g, '');
       const response = await AuthController.register(formData);
       console.log("Usuário criado:", response);
       
