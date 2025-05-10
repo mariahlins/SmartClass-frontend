@@ -1,0 +1,289 @@
+.css-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    font-family: "Lexend", sans-serif;
+}
+
+.content {
+    margin-left: 250px;
+    margin-top: 10vh;
+    padding: 2rem;
+    background-color: #f9f9f9;
+    flex: 1;
+    border-radius: 1rem;
+    color: #3E238E;
+}
+
+.pendingActivitiesContainer {
+  flex: 1;
+  padding: 20px;
+  background-color: #f7f9fc;
+}
+
+.sectionTitle {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  color: #333;
+  border-bottom: 2px solid #3E238E;
+  padding-bottom: 10px;
+}
+
+.loadingMessage,
+.errorMessage,
+.emptyState {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.errorMessage {
+  color: #e74c3c;
+  border-left: 4px solid #e74c3c;
+}
+
+.emptyMessage {
+  color: #7f8c8d;
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+.activityHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.totalCount {
+  font-weight: 500;
+  color: #7f8c8d;
+}
+
+.activitiesList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.activityCard {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.activityCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.activityHeaderInfo {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.activityStatus {
+  font-size: 0.8rem;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-weight: 500;
+}
+
+.pendente {
+  background-color: #ffeaa7;
+  color: #d35400;
+}
+
+.activityTitle {
+  margin: 0 0 10px;
+  font-size: 1.2rem;
+  color: #2c3e50;
+}
+
+.activityDescription {
+  margin: 0 0 15px;
+  color: #7f8c8d;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.activityMetadata {
+  display: flex;
+  gap: 20px;
+  color: #7f8c8d;
+  font-size: 0.9rem;
+}
+
+.activityActions {
+  display: flex;
+  gap: 10px;
+}
+
+.submitButton {
+  background-color: #3E238E;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.submitButton:hover {
+  background-color: #5837bb;
+}
+
+.submitButton:disabled {
+  background-color: #bdc3c7;
+  cursor: not-allowed;
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  background-color: #fff;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background-color: #3E238E;
+  color: white;
+}
+
+.modalHeader h3 {
+  margin: 0;
+  font-size: 1.3rem;
+}
+
+.closeModal {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0;
+}
+
+.modalBody {
+  padding: 20px;
+}
+
+.submitForm {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.label {
+  font-weight: 500;
+  color: #3a2c50;
+}
+
+.formGroup p {
+  margin: 0;
+  color: #7f8c8d;
+}
+
+.fileUploadWrapper {
+  display: flex;
+  margin-top: 5px;
+}
+
+.fileLabel {
+  background-color: #3E238E;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.fileLabel:hover {
+  background-color: #5837bb;
+}
+
+.fileInput {
+  display: none;
+}
+
+.currentFile {
+  margin-top: 5px;
+  font-size: 0.9rem;
+  color: #362c50;
+}
+
+.fileHelp {
+  color: #7f8c8d;
+  font-size: 0.8rem;
+  margin-top: 5px;
+}
+
+.formActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.cancelButton {
+  background-color: #ecf0f1;
+  color: #7f8c8d;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.cancelButton:hover {
+  background-color: #dfe6e9;
+}
+
+.successMessage {
+  text-align: center;
+  padding: 20px;
+  color: #27ae60;
+  font-weight: 500;
+  font-size: 1.1rem;
+}

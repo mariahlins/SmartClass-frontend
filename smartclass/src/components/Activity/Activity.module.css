@@ -157,7 +157,7 @@
   }
   
   .submitButton {
-    background-color: #3E238E;
+    background-color: #3a2d62;
     color: white;
     border: none;
     padding: 8px 16px;
@@ -178,7 +178,7 @@
   }
   
   /* Modal styles */
-  .modalOverlay {
+  .modalOverlay, .modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -193,7 +193,7 @@
     transition: all 0.3s ease;
   }
   
-  .modalContent {
+  .modalContent, .modal-content {
     background-color: #fff;
     color: #333;
     border-radius: 8px;
@@ -218,7 +218,7 @@
     }
   }
   
-  .modalHeader {
+  .modalHeader, .modal-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -402,7 +402,7 @@
 }
 
 .avaliarButton, .submit-btn {
-  background-color: #3E238E;
+  background-color: #6d52c0;
   color: white;
 }
 

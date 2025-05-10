@@ -1,0 +1,391 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    font-family: "Lexend", sans-serif;
+}
+
+.content-activ{
+    margin-left: 250px;
+    margin-top: 10vh;
+    padding: 2rem;
+    background-color: #f9f9f9;
+    flex: 1;
+    border-radius: 1rem;
+    color: #3E238E;
+}
+
+.pendingGradesContainer {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 24px;
+  margin-bottom: 30px;
+}
+
+.sectionTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 12px;
+}
+
+.searchContainer {
+  margin-bottom: 24px;
+}
+
+.searchInputWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #666;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 12px 12px 12px 36px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: #3E238E;
+  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+}
+
+.loadingMessage,
+.errorMessage,
+.emptyState {
+  text-align: center;
+  padding: 40px 0;
+  color: #666;
+}
+
+.errorMessage {
+  color: #e74c3c;
+}
+
+.emptyMessage {
+  font-size: 16px;
+  color: #777;
+}
+
+.activityHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.totalCount {
+  font-size: 14px;
+  color: #666;
+}
+
+.searchResults {
+  font-style: italic;
+  color: #888;
+}
+
+.activitiesList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  overflow: auto;
+  max-height: 56vh;
+}
+
+.activityCard {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+  transition: all 0.2s ease;
+  background-color: #fcfcfc;
+}
+
+.activityCard:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.activityContent {
+  flex: 1;
+}
+
+.activityHeaderInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.activityStatus {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.pendente {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.activityDeadline {
+  font-size: 13px;
+  color: #777;
+}
+
+.activityTitle {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+  color: #333;
+}
+
+.activitySubtitle {
+  font-size: 14px;
+  font-weight: 500;
+  margin: 0 0 16px 0;
+  color: #555;
+}
+
+.conteudoInfo {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.conteudoInfo p {
+  margin: 0;
+  font-size: 14px;
+  color: #666;
+}
+
+.downloadButton,
+.previewButton {
+  background-color: #e7f5ff;
+  color: #3E238E;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 10px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.downloadButton:hover,
+.previewButton:hover {
+  background-color: #d0ebff;
+}
+
+.noContent {
+  font-style: italic;
+  color: #999;
+  font-size: 14px;
+}
+
+.activityActions {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 16px;
+}
+
+.avaliarButton {
+  background-color: #3E238E;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.avaliarButton:hover {
+  background-color: #5334b0;
+}
+
+/* Modal styles */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  background-color: white;
+  width: 90%;
+  max-width: 550px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+.modalHeader {
+  background-color: #f8f9fa;
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+}
+
+.modalHeader h3 {
+  margin: 0;
+  font-size: 18px;
+  color: #333;
+}
+
+.closeModal {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #666;
+  cursor: pointer;
+}
+
+.modalBody {
+  padding: 20px;
+}
+
+.successMessage {
+  text-align: center;
+  padding: 20px 0;
+  color: #2ecc71;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.avaliacaoForm {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.formGroup {
+  margin-bottom: 12px;
+}
+
+.formGroup:last-child {
+  margin-bottom: 0;
+}
+
+.label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: #555;
+}
+
+.notaInput {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.feedbackInput {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  resize: vertical;
+}
+
+.required {
+  color: #e74c3c;
+  font-size: 13px;
+}
+
+.formActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.cancelButton {
+  background-color: #f1f1f1;
+  color: #333;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cancelButton:hover {
+  background-color: #e1e1e1;
+}
+
+.submitButton {
+  background-color: #3E238E;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.submitButton:hover {
+  background-color: #5334b0;
+}
+
+.submitButton:disabled,
+.cancelButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.conteudoPreview {
+  margin-top: 8px;
+}
+
+@media (max-width: 768px) {
+  .activityCard {
+    flex-direction: column;
+  }
+  
+  .activityActions {
+    margin-left: 0;
+    margin-top: 16px;
+    align-items: flex-start;
+  }
+  
+  .modalContent {
+    width: 95%;
+  }
+}

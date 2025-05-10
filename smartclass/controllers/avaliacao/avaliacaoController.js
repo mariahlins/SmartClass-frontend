@@ -76,6 +76,16 @@ class AvaliacaoController{
         }
     }
 
+    static async listarFeedbacks(userId){
+        try{
+            const response = await api.get(`recomendacao/recomendacao/${userId}/get_aluno_recomendacoes/`);
+            return response.data;
+        }catch(error){
+            console.error('Erro ao listar atividades para avaliacao:', error.response ? error.response.data : error.message);
+            throw error;
+        }
+    }
+
     // Metodo para obtener os dados de uma atividade enviada para avaliacao pelo aluno
     static async obterAtividadeAvaliacao(atividadeId){
         try{
